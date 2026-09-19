@@ -70,6 +70,9 @@ export function CitizenList({
         direction: 'asc',
     });
 
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+
     const handleSort = (key: ColumnKey) => {
         setSortConfig((current) => ({
             key,
@@ -83,6 +86,19 @@ export function CitizenList({
     const sortedCitizens = useMemo(() => {
         return sortCitizens(citizens, sortConfig);
     }, [citizens, sortConfig]);
+
+    const totalPages = Math.ceil(
+        sortedCitizens.length / pageSize,
+    );
+
+    const paginatedCitizens = useMemo(() => {
+        const start = (page - 1) * pageSize;
+
+        return sortedCitizens.slice(
+            start,
+            start + pageSize,
+        );
+    }, [sortedCitizens, page, pageSize]);
     return (
         <div className="citizen-list">
             <div className="citizen-table-wrapper">
@@ -115,7 +131,7 @@ export function CitizenList({
                     </thead>
 
                     <tbody>
-                    {sortedCitizens.map((citizen) => (
+                    {paginatedCitizens.map((citizen) => (
                         <tr
                             key={citizen.id}
                             className={
@@ -163,6 +179,56 @@ export function CitizenList({
                     ))}
                     </tbody>
                 </table>
+
+                <div className="table-pagination">
+                    <div className="table-pagination-info">
+                        Показано{' '}
+                        {sortedCitizens.length === 0
+                            ? 0
+                            : (page - 1) * pageSize + 1}
+                        {'–'}
+                        {Math.min(
+                            page * pageSize,
+                            sortedCitizens.length,
+                        )}
+                        {' из '}
+                        {sortedCitizens.length}
+                    </div>
+
+                    <div className="table-pagination-controls">
+                        <button
+                            type="button"
+                            disabled={page === 1}
+                            onClick={() => setPage((current) => current - 1)}
+                        >
+                            ←
+                        </button>
+
+                        <span>
+            {page} / {totalPages || 1}
+        </span>
+
+                        <button
+                            type="button"
+                            disabled={page === totalPages || totalPages === 0}
+                            onClick={() => setPage((current) => current + 1)}
+                        >
+                            →
+                        </button>
+                    </div>
+
+                    <select
+                        value={pageSize}
+                        onChange={(event) => {
+                            setPageSize(Number(event.target.value));
+                            setPage(1);
+                        }}
+                    >
+                        <option value={10}>10 / стр.</option>
+                        <option value={25}>25 / стр.</option>
+                        <option value={50}>50 / стр.</option>
+                    </select>
+                </div>
 
                 {citizens.length === 0 && (
                     <div className="citizen-list-empty">

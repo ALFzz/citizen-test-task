@@ -123,3 +123,51 @@
     font-weight: inherit;
     text-transform: inherit;
 }
+
+.table-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 18px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.table-pagination-info {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.table-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.table-pagination-controls button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background: #fff;
+    color: #374151;
+}
+
+.table-pagination-controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.table-pagination-controls span {
+    color: #374151;
+    font-size: 12px;
+}
+
+.table-pagination select {
+    padding: 7px 28px 7px 8px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background: #fff;
+    color: #374151;
+    font-size: 12px;
+}
