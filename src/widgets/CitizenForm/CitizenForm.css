@@ -71,6 +71,8 @@
 .citizen-form__step {
     display: flex;
     align-items: center;
+    padding: 10px;
+    border-radius: 10px;
     gap: 8px;
     color: #9ca3af;
     font-size: 13px;
@@ -99,7 +101,7 @@
     color: #2563eb;
 }
 
-.citizen-form__step--active
+.citizen-form__step--active,
 .citizen-form__step-number {
     background: #2563eb;
     color: #fff;
@@ -109,7 +111,7 @@
     color: #374151;
 }
 
-.citizen-form__step--completed
+.citizen-form__step--completed,
 .citizen-form__step-number {
     background: #e5e7eb;
     color: #374151;
@@ -172,5 +174,68 @@
 
     .citizen-form__step {
         flex-shrink: 0;
+    }
+}
+
+.citizen-form-step h3 {
+    margin: 0 0 6px;
+    color: #111827;
+    font-size: 18px;
+}
+
+.citizen-form-step > p {
+    margin: 0 0 24px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-field--full {
+    grid-column: 1 / -1;
+}
+
+.form-field span {
+    color: #374151;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-field input,
+.form-field select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+    color: #111827;
+    font: inherit;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-field--full {
+        grid-column: auto;
     }
 }

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
 import './CitizenForm.css';
+import {PersonalStep} from "./steps/PersonalStep.tsx";
+import {ContactsStep} from "./steps/ContactsStep.tsx";
+import {AdditionalStep} from "./steps/AdditionalStep.tsx";
 
 type CitizenFormProps = {
     onClose: () => void;
@@ -72,7 +75,6 @@ export function CitizenForm({
                 <span className="citizen-form__step-number">
                   {stepNumber}
                 </span>
-
                                 <span>{label}</span>
                             </div>
                         );
@@ -80,35 +82,11 @@ export function CitizenForm({
                 </nav>
 
                 <main className="citizen-form__content">
-                    {step === 1 && (
-                        <div>
-                            <h3>Основные сведения</h3>
+                    {step === 1 && <PersonalStep />}
 
-                            <p>
-                                Укажите персональные данные гражданина
-                            </p>
-                        </div>
-                    )}
+                    {step === 2 && <ContactsStep />}
 
-                    {step === 2 && (
-                        <div>
-                            <h3>Контактная информация</h3>
-
-                            <p>
-                                Укажите контактные данные и адрес
-                            </p>
-                        </div>
-                    )}
-
-                    {step === 3 && (
-                        <div>
-                            <h3>Дополнительные сведения</h3>
-
-                            <p>
-                                Укажите дополнительные данные
-                            </p>
-                        </div>
-                    )}
+                    {step === 3 && <AdditionalStep />}
                 </main>
 
                 <footer className="citizen-form__footer">
