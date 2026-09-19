@@ -22,6 +22,7 @@ function getStatusLabel(status: Citizen['status']) {
     return labels[status];
 }
 
+
 function formatDate(value: string) {
     return new Intl.DateTimeFormat('ru-RU').format(
         new Date(`${value}T00:00:00`),

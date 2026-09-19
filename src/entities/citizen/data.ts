@@ -6,7 +6,7 @@ export const citizens: Citizen[] = [
         firstName: 'Иван',
         lastName: 'Петров',
         middleName: 'Иванович',
-        birthDate: '',
+        birthDate: '1990-02-12',
         gender: 'male',
         citizenship: 'Российская Федерация',
         phone: '+7 (910) 423-55-55',

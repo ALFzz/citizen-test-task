@@ -6,7 +6,7 @@
 .app-content {
     display: flex;
     flex: 1;
-    max-width: 0;
+    min-width: 0;
     flex-direction: column;
 
 }
