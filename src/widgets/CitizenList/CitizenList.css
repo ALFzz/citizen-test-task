@@ -1,64 +1,48 @@
 .citizen-list {
     overflow: hidden;
-
     border: 1px solid #e5e7eb;
     border-radius: 12px;
-
     background: #fff;
 }
 
-
-
-.citizen-list-header,
-.citizen-row {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 110px;
-
-    align-items: center;
-    gap: 20px;
+.citizen-table-wrapper {
+    overflow-x: auto;
 }
 
-.citizen-list-header {
+.citizen-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.citizen-table th {
     padding: 13px 18px;
-
     border-bottom: 1px solid #e5e7eb;
-
     background: #f9fafb;
-
     color: #6b7280;
-
     font-size: 11px;
     font-weight: 600;
+    text-align: left;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
-.citizen-row {
-    width: 100%;
+.citizen-table td {
     padding: 15px 18px;
-
-    border: 0;
     border-bottom: 1px solid #f0f1f3;
-
-    background: #fff;
-
     color: #374151;
-
     font-size: 13px;
+}
 
-    text-align: left;
-
+.citizen-table tbody tr {
+    cursor: pointer;
     transition: background 0.15s;
 }
 
-.citizen-row:last-child {
-    border-bottom: 0;
-}
-
-.citizen-row:hover {
+.citizen-table tbody tr:hover {
     background: #f9fafb;
 }
 
-.citizen-row--selected {
+.citizen-table tbody tr.citizen-row--selected {
     background: #eff6ff;
 }
 
@@ -74,6 +58,12 @@
     gap: 3px;
 }
 
+.citizen-name-cell strong {
+    color: #374151;
+    font-size: 13px;
+    font-weight: 600;
+}
+
 .citizen-name-cell span {
     color: #9ca3af;
     font-size: 11px;
@@ -83,28 +73,19 @@
     display: grid;
     width: 34px;
     height: 34px;
-
     flex-shrink: 0;
-
     place-items: center;
-
     border-radius: 50%;
-
     background: #e5e7eb;
-
     color: #4b5563;
-
     font-size: 11px;
     font-weight: 600;
 }
 
 .status {
     width: fit-content;
-
     padding: 4px 8px;
-
     border-radius: 999px;
-
     font-size: 11px;
     font-weight: 600;
 }
@@ -126,8 +107,6 @@
 
 .citizen-list-empty {
     padding: 48px 20px;
-
     color: #6b7280;
-
     text-align: center;
 }
