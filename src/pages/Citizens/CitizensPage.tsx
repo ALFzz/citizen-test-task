@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-
 import { citizens } from '../../entities/citizen/data';
 import type {
     Citizen,
@@ -9,9 +8,10 @@ import type {
 import {filterCitizens} from "./utils/filterCitizens.ts";
 import { CitizenList } from '../../widgets/CitizenList/CitizenList';
 import { CitizenProfile } from '../../widgets/CitizenProfile/CitizenProfile';
-
-import './CitizensPage.css';
 import {CitizenFilters} from "../../widgets/CitizenFilters/CItizenFilters.tsx";
+import {PageHeader} from "../../widgets/PageHeader/PageHeader.tsx";
+import './CitizensPage.css';
+
 
 export function CitizensPage() {
     const [search, setSearch] = useState('');
@@ -37,7 +37,9 @@ export function CitizensPage() {
     const selectedCitizen =
         filteredCitizens.find(
             (citizen) => citizen.id === selectedCitizenId,
-        ) ?? null;
+        ) ??
+        filteredCitizens[0] ??
+        null;
 
     const handleSelectCitizen = (citizen: Citizen) => {
         setSelectedCitizenId(citizen.id);
@@ -52,26 +54,12 @@ export function CitizensPage() {
 
     return (
         <div className="citizens-page">
-            <div className="citizens-page-header">
-                <div>
-          <span className="page-breadcrumb">
-            Рабочая область / Картотека
-          </span>
-
-                    <h1>Граждане</h1>
-
-                    <p>
-                        Управление и просмотр информации о гражданах
-                    </p>
-                </div>
-
-                <button
-                    className="primary-button"
-                    type="button"
-                >
-                    + Добавить гражданина
-                </button>
-            </div>
+            <PageHeader
+                breadcrumb="Рабочая область / Картотека"
+                title="Граждане"
+                description="Управление и просмотр информации о гражданах"
+                actionLabel="Добавить гражданина"
+            />
 
             <CitizenFilters
                 search={search}

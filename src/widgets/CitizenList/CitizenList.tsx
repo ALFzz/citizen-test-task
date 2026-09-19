@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
 import type { Citizen } from '../../entities/citizen/types';
 import type { Column, SortConfig, ColumnKey } from './types';
-import './CitizenList.css';
 import {sortCitizens} from "./utils/sortCitizens.ts";
 import {TablePagination} from "./components/TablePagination.tsx";
 import {ColumnSelector} from "./components/ColumnSelector.tsx";
 import {CitizenTable} from "./components/CitizenTable.tsx";
+import './CitizenList.css';
 
 
 
