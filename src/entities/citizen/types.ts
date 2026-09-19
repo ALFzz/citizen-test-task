@@ -19,6 +19,14 @@ export interface Education {
 
 export interface Document {
     id: string;
+    type: string;
+    number: string;
+    issueDate: string;
+    status: string;
+}
+
+export interface Citizen {
+    id: string;
     firstName: string;
     lastName: string;
     middleName: string;
