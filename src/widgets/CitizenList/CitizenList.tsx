@@ -1,6 +1,10 @@
+import { useMemo, useState } from 'react';
 import type { Citizen } from '../../entities/citizen/types';
-import type { Column } from './types';
+import type { Column, SortConfig, ColumnKey } from './types';
 import './CitizenList.css';
+import {sortCitizens} from "./utils/sortCitizens.ts";
+
+
 
 const columns: Column[] = [
     {
@@ -60,6 +64,25 @@ export function CitizenList({
                                 selectedCitizenId,
                                 onSelect,
                             }: CitizenListProps) {
+
+    const [sortConfig, setSortConfig] = useState<SortConfig>({
+        key: 'fullName',
+        direction: 'asc',
+    });
+
+    const handleSort = (key: ColumnKey) => {
+        setSortConfig((current) => ({
+            key,
+            direction:
+                current.key === key && current.direction === 'asc'
+                    ? 'desc'
+                    : 'asc',
+        }));
+    };
+
+    const sortedCitizens = useMemo(() => {
+        return sortCitizens(citizens, sortConfig);
+    }, [citizens, sortConfig]);
     return (
         <div className="citizen-list">
             <div className="citizen-table-wrapper">
@@ -68,14 +91,31 @@ export function CitizenList({
                     <tr>
                         {columns.map((column) => (
                             <th key={column.key}>
-                                {column.label}
+                                {column.sortable ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => handleSort(column.key)}
+                                    >
+                                        {column.label}
+
+                                        {sortConfig.key === column.key && (
+                                            <span>
+                                {sortConfig.direction === 'asc'
+                                    ? ' ↑'
+                                    : ' ↓'}
+                            </span>
+                                        )}
+                                    </button>
+                                ) : (
+                                    column.label
+                                )}
                             </th>
                         ))}
                     </tr>
                     </thead>
 
                     <tbody>
-                    {citizens.map((citizen) => (
+                    {sortedCitizens.map((citizen) => (
                         <tr
                             key={citizen.id}
                             className={

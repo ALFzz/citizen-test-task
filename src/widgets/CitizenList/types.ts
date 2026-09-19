@@ -10,3 +10,10 @@ export type Column = {
     label: string;
     sortable?: boolean;
 };
+
+export type SortDirection = 'asc' | 'desc';
+
+export type SortConfig = {
+    key: ColumnKey;
+    direction: SortDirection;
+};
