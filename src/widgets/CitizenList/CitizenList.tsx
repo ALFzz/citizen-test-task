@@ -1,5 +1,33 @@
 import type { Citizen } from '../../entities/citizen/types';
+import type { Column } from './types';
 import './CitizenList.css';
+
+const columns: Column[] = [
+    {
+        key: 'fullName',
+        label: 'Гражданин',
+        sortable: true,
+    },
+    {
+        key: 'birthDate',
+        label: 'Дата рождения',
+        sortable: true,
+    },
+    {
+        key: 'region',
+        label: 'Регион',
+        sortable: true,
+    },
+    {
+        key: 'phone',
+        label: 'Телефон',
+    },
+    {
+        key: 'status',
+        label: 'Статус',
+        sortable: true,
+    },
+];
 
 type CitizenListProps = {
     citizens: Citizen[];
@@ -38,11 +66,11 @@ export function CitizenList({
                 <table className="citizen-table">
                     <thead>
                     <tr>
-                        <th>Гражданин</th>
-                        <th>Дата рождения</th>
-                        <th>Регион</th>
-                        <th>Телефон</th>
-                        <th>Статус</th>
+                        {columns.map((column) => (
+                            <th key={column.key}>
+                                {column.label}
+                            </th>
+                        ))}
                     </tr>
                     </thead>
 
