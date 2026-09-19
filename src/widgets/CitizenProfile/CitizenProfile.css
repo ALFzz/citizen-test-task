@@ -1,0 +1,296 @@
+.citizen-profile {
+    display: flex;
+    min-width: 0;
+
+    flex-direction: column;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.citizen-profile--empty {
+    min-height: 500px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    color: #6b7280;
+
+    text-align: center;
+}
+
+.profile-empty-icon {
+    display: grid;
+    width: 52px;
+    height: 52px;
+
+    margin-bottom: 16px;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: #f3f4f6;
+
+    font-size: 24px;
+}
+
+.profile-profile--empty strong {
+    color: #111827;
+}
+
+.citizen-profile--empty span {
+    max-width: 250px;
+
+    margin-top: 6px;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.profile-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    padding: 22px;
+
+    border-bottom: 0;
+}
+
+.profile-person {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.profile-avatar {
+    display: grid;
+    width: 52px;
+    height: 52px;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: #dbeafe;
+
+    color: #1d4ed8;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.profile-person h2 {
+    margin: 0 0 4px;
+
+    color: #111827;
+
+    font-size: 17px;
+}
+
+.profile-person span {
+    color: #9ca3af;
+
+    font-size: 11px;
+}
+
+.profile-edit-button {
+    padding: 7px 11px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+
+    background: #fff;
+
+    color: #374151;
+
+    font-size: 12px;
+}
+
+.profile-edit-button:hover {
+    background: #f9fafb;
+}
+
+.profile-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 0 22px 20px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.profile-tabs {
+    display: flex;
+
+    overflow-x: auto;
+
+    padding: 0 22px;
+
+    border-top: 1px solid #f0f1f3;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.profile-tab {
+    flex-shrink: 0;
+
+    padding: 13px 10px;
+
+    border: 0;
+    border-bottom: 2px solid transparent;
+
+    background: transparent;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.profile-tab--active {
+    border-bottom-color: #2563eb;
+
+    color: #2563eb;
+
+    font-weight: 600;
+}
+
+.profile-content {
+    overflow-y: auto;
+
+    max-height: 620px;
+
+    padding: 22px;
+}
+
+.profile-section {
+    margin-bottom: 28px;
+}
+
+.profile-section:last-child {
+    margin-bottom: 0;
+}
+
+.profile-section h3 {
+    margin: 0 0 15px;
+
+    color: #111827;
+
+    font-size: 13px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+
+    overflow: hidden;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+
+    background: #e5e7eb;
+}
+
+.info-item {
+    display: flex;
+    min-width: 0;
+
+    flex-direction: column;
+    gap: 5px;
+
+    padding: 12px;
+
+    background: #fff;
+}
+
+.info-item--full {
+    grid-column: 1 / -1;
+}
+
+.info-item span {
+    color: #9ca3af;
+
+    font-size: 10px;
+}
+
+.info-item strong {
+    overflow: hidden;
+
+    color: #374151;
+
+    font-size: 12px;
+    font-weight: 500;
+    text-overflow: ellipsis;
+}
+
+.related-list {
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.related-item {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 13px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    font-size: 12px;
+}
+
+.related-item:last-child {
+    border-bottom: 0;
+}
+
+.related-item > div {
+    display: flex;
+
+    min-width: 0;
+
+    flex-direction: column;
+    gap: 3px;
+}
+
+.related-item strong {
+    color: #374151;
+    font-size: 12px;
+}
+
+.related-item span {
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+.related-item--column {
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.profile-empty-state {
+    padding: 30px;
+
+    color: #9ca3af;
+
+    font-size: 12px;
+
+    text-align: center;
+}

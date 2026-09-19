@@ -28,11 +28,7 @@ function formatDate(value: string) {
     );
 }
 
-export function CitizenList({
-                                citizens,
-                                selectedCitizenId,
-                                onSelect,
-                            }: CitizenListProps) {
+export function CitizenList({citizens, selectedCitizenId, onSelect,}: CitizenListProps) {
     return (
         <div className="citizen-list">
             <div className="citizen-list-header">
