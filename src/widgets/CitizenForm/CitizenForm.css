@@ -1,0 +1,176 @@
+.citizen-form-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(15, 23, 42, 0.45);
+}
+
+.citizen-form {
+    display: flex;
+    flex-direction: column;
+    width: min(760px, 100%);
+    max-height: calc(100vh - 48px);
+    overflow: hidden;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+}
+
+.citizen-form__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.citizen-form__eyebrow {
+    display: block;
+    margin-bottom: 6px;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.citizen-form__header h2 {
+    margin: 0;
+    color: #111827;
+    font-size: 22px;
+}
+
+.citizen-form__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #6b7280;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.citizen-form__close:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.citizen-form__steps {
+    display: flex;
+    gap: 8px;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.citizen-form__step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.citizen-form__step:not(:last-child)::after {
+    content: '→';
+    margin-left: 8px;
+    color: #d1d5db;
+}
+
+.citizen-form__step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.citizen-form__step--active {
+    color: #2563eb;
+}
+
+.citizen-form__step--active
+.citizen-form__step-number {
+    background: #2563eb;
+    color: #fff;
+}
+
+.citizen-form__step--completed {
+    color: #374151;
+}
+
+.citizen-form__step--completed
+.citizen-form__step-number {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.citizen-form__content {
+    min-height: 280px;
+    padding: 28px 24px;
+    overflow-y: auto;
+}
+
+.citizen-form__content h3 {
+    margin: 0 0 6px;
+    color: #111827;
+    font-size: 18px;
+}
+
+.citizen-form__content p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.citizen-form__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.secondary-button {
+    padding: 9px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    color: #374151;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.secondary-button:hover {
+    background: #f9fafb;
+}
+
+@media (max-width: 640px) {
+    .citizen-form-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .citizen-form {
+        max-height: 90vh;
+        border-radius: 16px 16px 0 0;
+    }
+
+    .citizen-form__steps {
+        overflow-x: auto;
+    }
+
+    .citizen-form__step {
+        flex-shrink: 0;
+    }
+}

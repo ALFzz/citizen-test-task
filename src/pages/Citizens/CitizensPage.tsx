@@ -11,6 +11,7 @@ import { CitizenProfile } from '../../widgets/CitizenProfile/CitizenProfile';
 import {CitizenFilters} from "../../widgets/CitizenFilters/CItizenFilters.tsx";
 import {PageHeader} from "../../widgets/PageHeader/PageHeader.tsx";
 import './CitizensPage.css';
+import {CitizenForm} from "../../widgets/CitizenForm/CitizenForm.tsx";
 
 
 export function CitizensPage() {
@@ -23,6 +24,8 @@ export function CitizensPage() {
 
     const [selectedCitizenId, setSelectedCitizenId] =
         useState<string | null>(citizens[0]?.id ?? null);
+
+    const [isFormOpen, setIsFormOpen] = useState(false);
 
     const filteredCitizens = useMemo(() => {
         return filterCitizens({
@@ -59,6 +62,7 @@ export function CitizensPage() {
                 title="Граждане"
                 description="Управление и просмотр информации о гражданах"
                 actionLabel="Добавить гражданина"
+                onAction={() => setIsFormOpen(true)}
             />
 
             <CitizenFilters
@@ -97,6 +101,12 @@ export function CitizensPage() {
 
                 <CitizenProfile citizen={selectedCitizen} />
             </div>
+
+            {isFormOpen && (
+                <CitizenForm
+                    onClose={() => setIsFormOpen(false)}
+                />
+            )}
         </div>
     );
 }
