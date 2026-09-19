@@ -1,9 +1,9 @@
-import type { Column } from '../types';
+import type {Column, ColumnKey} from '../types';
 
 type ColumnSelectorProps = {
     columns: Column[];
-    visibleColumns: string[];
-    onChange: (columns: string[]) => void;
+    visibleColumns: ColumnKey[];
+    onChange: (columns: ColumnKey[]) => void;
 };
 
 export function ColumnSelector({
@@ -11,7 +11,7 @@ export function ColumnSelector({
                                    visibleColumns,
                                    onChange,
                                }: ColumnSelectorProps) {
-    const handleToggle = (key: string) => {
+    const handleToggle = (key: ColumnKey) => {
         if (visibleColumns.includes(key)) {
             onChange(visibleColumns.filter((column) => column !== key));
             return;
