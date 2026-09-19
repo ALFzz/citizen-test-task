@@ -3,6 +3,7 @@ import type { Citizen } from '../../entities/citizen/types';
 import type { Column, SortConfig, ColumnKey } from './types';
 import './CitizenList.css';
 import {sortCitizens} from "./utils/sortCitizens.ts";
+import {TablePagination} from "./components/TablePagination.tsx";
 
 
 
@@ -180,55 +181,17 @@ export function CitizenList({
                     </tbody>
                 </table>
 
-                <div className="table-pagination">
-                    <div className="table-pagination-info">
-                        Показано{' '}
-                        {sortedCitizens.length === 0
-                            ? 0
-                            : (page - 1) * pageSize + 1}
-                        {'–'}
-                        {Math.min(
-                            page * pageSize,
-                            sortedCitizens.length,
-                        )}
-                        {' из '}
-                        {sortedCitizens.length}
-                    </div>
-
-                    <div className="table-pagination-controls">
-                        <button
-                            type="button"
-                            disabled={page === 1}
-                            onClick={() => setPage((current) => current - 1)}
-                        >
-                            ←
-                        </button>
-
-                        <span>
-            {page} / {totalPages || 1}
-        </span>
-
-                        <button
-                            type="button"
-                            disabled={page === totalPages || totalPages === 0}
-                            onClick={() => setPage((current) => current + 1)}
-                        >
-                            →
-                        </button>
-                    </div>
-
-                    <select
-                        value={pageSize}
-                        onChange={(event) => {
-                            setPageSize(Number(event.target.value));
-                            setPage(1);
-                        }}
-                    >
-                        <option value={10}>10 / стр.</option>
-                        <option value={25}>25 / стр.</option>
-                        <option value={50}>50 / стр.</option>
-                    </select>
-                </div>
+                <TablePagination
+                    page={page}
+                    pageSize={pageSize}
+                    totalItems={sortedCitizens.length}
+                    totalPages={totalPages}
+                    onPageChange={setPage}
+                    onPageSizeChange={(size) => {
+                        setPageSize(size);
+                        setPage(1);
+                    }}
+                />
 
                 {citizens.length === 0 && (
                     <div className="citizen-list-empty">
