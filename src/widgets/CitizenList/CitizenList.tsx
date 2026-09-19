@@ -4,6 +4,7 @@ import type { Column, SortConfig, ColumnKey } from './types';
 import './CitizenList.css';
 import {sortCitizens} from "./utils/sortCitizens.ts";
 import {TablePagination} from "./components/TablePagination.tsx";
+import {ColumnSelector} from "./components/ColumnSelector.tsx";
 
 
 
@@ -74,6 +75,10 @@ export function CitizenList({
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
 
+    const [visibleColumns, setVisibleColumns] = useState<string[]>(
+        columns.map((column) => column.key),
+    );
+
     const handleSort = (key: ColumnKey) => {
         setSortConfig((current) => ({
             key,
@@ -100,34 +105,84 @@ export function CitizenList({
             start + pageSize,
         );
     }, [sortedCitizens, page, pageSize]);
+
+    const renderCell = (citizen: Citizen, key: ColumnKey) => {
+        switch (key) {
+            case 'fullName':
+                return (
+                    <div className="citizen-name-cell">
+                        <div className="citizen-avatar">
+                            {citizen.firstName[0]}
+                            {citizen.lastName[0]}
+                        </div>
+
+                        <div>
+                            <strong>
+                                {citizen.lastName} {citizen.firstName}{' '}
+                                {citizen.middleName}
+                            </strong>
+
+                            <span>{citizen.id}</span>
+                        </div>
+                    </div>
+                );
+
+            case 'birthDate':
+                return formatDate(citizen.birthDate);
+
+            case 'region':
+                return citizen.region;
+
+            case 'phone':
+                return citizen.phone;
+
+            case 'status':
+                return (
+                    <span className={`status status--${citizen.status}`}>
+          {getStatusLabel(citizen.status)}
+        </span>
+                );
+        }
+    };
+
+
     return (
         <div className="citizen-list">
+
+            <ColumnSelector
+                columns={columns}
+                visibleColumns={visibleColumns}
+                onChange={setVisibleColumns}
+            />
+
             <div className="citizen-table-wrapper">
+
+
                 <table className="citizen-table">
                     <thead>
                     <tr>
-                        {columns.map((column) => (
-                            <th key={column.key}>
-                                {column.sortable ? (
-                                    <button
-                                        type="button"
-                                        onClick={() => handleSort(column.key)}
-                                    >
-                                        {column.label}
+                        {columns
+                            .filter((column) => visibleColumns.includes(column.key))
+                            .map((column) => (
+                                <th key={column.key}>
+                                    {column.sortable ? (
+                                        <button
+                                            type="button"
+                                            onClick={() => handleSort(column.key)}
+                                        >
+                                            {column.label}
 
-                                        {sortConfig.key === column.key && (
-                                            <span>
-                                {sortConfig.direction === 'asc'
-                                    ? ' ↑'
-                                    : ' ↓'}
-                            </span>
-                                        )}
-                                    </button>
-                                ) : (
-                                    column.label
-                                )}
-                            </th>
-                        ))}
+                                            {sortConfig.key === column.key && (
+                                                <span>
+                  {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                </span>
+                                            )}
+                                        </button>
+                                    ) : (
+                                        column.label
+                                    )}
+                                </th>
+                            ))}
                     </tr>
                     </thead>
 
@@ -136,46 +191,19 @@ export function CitizenList({
                         <tr
                             key={citizen.id}
                             className={
-                                selectedCitizenId === citizen.id
+                                citizen.id === selectedCitizenId
                                     ? 'citizen-row--selected'
                                     : ''
                             }
                             onClick={() => onSelect(citizen)}
                         >
-                            <td>
-                                <div className="citizen-name-cell">
-                                    <div className="citizen-avatar">
-                                        {citizen.firstName[0]}
-                                        {citizen.lastName[0]}
-                                    </div>
-
-                                    <div>
-                                        <strong>
-                                            {citizen.lastName}{' '}
-                                            {citizen.firstName}{' '}
-                                            {citizen.middleName}
-                                        </strong>
-
-                                        <span>{citizen.id}</span>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>
-                                {formatDate(citizen.birthDate)}
-                            </td>
-
-                            <td>{citizen.region}</td>
-
-                            <td>{citizen.phone}</td>
-
-                            <td>
-                                    <span
-                                        className={`status status--${citizen.status}`}
-                                    >
-                                        {getStatusLabel(citizen.status)}
-                                    </span>
-                            </td>
+                            {columns
+                                .filter((column) => visibleColumns.includes(column.key))
+                                .map((column) => (
+                                    <td key={column.key}>
+                                        {renderCell(citizen, column.key)}
+                                    </td>
+                                ))}
                         </tr>
                     ))}
                     </tbody>
