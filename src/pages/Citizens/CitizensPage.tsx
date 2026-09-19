@@ -6,13 +6,13 @@ import type {
     CitizenStatus,
     Gender,
 } from '../../entities/citizen/types';
-
+import {filterCitizens} from "./utils/filterCitizens.ts";
 import { CitizenList } from '../../widgets/CitizenList/CitizenList';
 import { CitizenProfile } from '../../widgets/CitizenProfile/CitizenProfile';
 
 import './CitizensPage.css';
+import {CitizenFilters} from "../../widgets/CitizenFilters/CItizenFilters.tsx";
 
-console.log(citizens)
 export function CitizensPage() {
     const [search, setSearch] = useState('');
     const [region, setRegion] = useState('');
@@ -25,35 +25,12 @@ export function CitizensPage() {
         useState<string | null>(citizens[0]?.id ?? null);
 
     const filteredCitizens = useMemo(() => {
-        const normalizedSearch =
-            search.trim().toLowerCase();
-
-        return citizens.filter((citizen) => {
-            const fullName =
-                `${citizen.lastName} ${citizen.firstName} ${citizen.middleName}`
-                    .toLowerCase();
-
-            const matchesSearch =
-                !normalizedSearch ||
-                fullName.includes(normalizedSearch) ||
-                citizen.id.toLowerCase().includes(normalizedSearch) ||
-                citizen.phone.includes(normalizedSearch);
-
-            const matchesRegion =
-                !region || citizen.region === region;
-
-            const matchesStatus =
-                !status || citizen.status === status;
-
-            const matchesGender =
-                !gender || citizen.gender === gender;
-
-            return (
-                matchesSearch &&
-                matchesRegion &&
-                matchesStatus &&
-                matchesGender
-            );
+        return filterCitizens({
+            citizens,
+            search,
+            region,
+            status,
+            gender,
         });
     }, [search, region, status, gender]);
 
@@ -96,72 +73,17 @@ export function CitizensPage() {
                 </button>
             </div>
 
-            <section className="citizens-toolbar">
-                <div className="citizens-search">
-                    <span>⌕</span>
-
-                    <input
-                        value={search}
-                        onChange={(event) =>
-                            setSearch(event.target.value)
-                        }
-                        placeholder="Поиск по ФИО, ID или телефону"
-                    />
-                </div>
-
-                <select
-                    value={region}
-                    onChange={(event) =>
-                        setRegion(event.target.value)
-                    }
-                >
-                    <option value="">Все регионы</option>
-                    <option value="Москва">Москва</option>
-                    <option value="Санкт-Петербург">
-                        Санкт-Петербург
-                    </option>
-                    <option value="Республика Татарстан">
-                        Республика Татарстан
-                    </option>
-                </select>
-
-                <select
-                    value={status}
-                    onChange={(event) =>
-                        setStatus(
-                            event.target.value as CitizenStatus | '',
-                        )
-                    }
-                >
-                    <option value="">Все статусы</option>
-                    <option value="active">Активен</option>
-                    <option value="verification">Проверка</option>
-                    <option value="blocked">Заблокирован</option>
-                </select>
-
-                <select
-                    value={gender}
-                    onChange={(event) =>
-                        setGender(
-                            event.target.value as Gender | '',
-                        )
-                    }
-                >
-                    <option value="">Любой пол</option>
-                    <option value="male">Мужской</option>
-                    <option value="female">Женский</option>
-                </select>
-
-                {(search || region || status || gender) && (
-                    <button
-                        className="reset-button"
-                        type="button"
-                        onClick={handleResetFilters}
-                    >
-                        Сбросить
-                    </button>
-                )}
-            </section>
+            <CitizenFilters
+                search={search}
+                region={region}
+                status={status}
+                gender={gender}
+                onSearchChange={setSearch}
+                onRegionChange={setRegion}
+                onStatusChange={setStatus}
+                onGenderChange={setGender}
+                onReset={handleResetFilters}
+            />
 
             <div className="citizens-summary">
                 <div>
