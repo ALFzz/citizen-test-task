@@ -1,6 +1,7 @@
 import {Outlet} from "react-router-dom";
-import './Layout.css'
 import {Sidebar} from "../Sidebar/Sidebar.tsx";
+import {Header} from "../Header/Header.tsx";
+import './Layout.css'
 
 export function Layout() {
     return (
@@ -10,7 +11,7 @@ export function Layout() {
             <div className="app-content">
                 <Header/>
 
-                <main>
+                <main className="app-main">
                     <Outlet/>
                 </main>
             </div>
