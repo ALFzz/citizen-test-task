@@ -20,6 +20,7 @@ export function CitizensPage() {
     const [region, setRegion] = useState('');
     const [status, setStatus] = useState<CitizenStatus | ''>('');
     const [gender, setGender] = useState<Gender | ''>('');
+    const [notification, setNotification] = useState('');
 
     const [citizens, setCitizens] = useState(initialCitizens);
     const [selectedCitizenId, setSelectedCitizenId] =
@@ -57,7 +58,9 @@ export function CitizensPage() {
         };
 
         setCitizens((current) => [newCitizen, ...current]);
+        setSelectedCitizenId(newCitizen.id);
         setIsFormOpen(false);
+        setNotification('Гражданин успешно добавлен');
     };
 
     const filteredCitizens = useMemo(() => {
@@ -97,6 +100,12 @@ export function CitizensPage() {
                 actionLabel="Добавить гражданина"
                 onAction={() => setIsFormOpen(true)}
             />
+
+            {notification && (
+                <div className="notification">
+                    {notification}
+                </div>
+            )}
 
             <CitizenFilters
                 search={search}
