@@ -6,6 +6,7 @@ import './DashboardPage.css';
 import {PageHeader} from "../../widgets/PageHeader/PageHeader.tsx";
 import {CitizensByRegion} from "../../widgets/CitizensByRegion/CitizensByRegion.tsx";
 import {CitizensByStatus} from "../../widgets/CitizensByStatus/CitizensByStatus.tsx";
+import {CitizensByAge} from "../../widgets/CitizensByAge/CitizensByAge.tsx";
 
 export function DashboardPage() {
     const statistics = useMemo(() => {
@@ -81,8 +82,8 @@ export function DashboardPage() {
 
             <div className="dashboard-charts">
                 <CitizensByRegion citizens={citizens}/>
-
                 <CitizensByStatus citizens={citizens}/>
+                <CitizensByAge citizens={citizens}/>
             </div>
         </div>
     );
