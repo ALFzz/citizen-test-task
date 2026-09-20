@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import { citizens as initialCitizens  } from '../../entities/citizen/data';
 import type {
     Citizen,
@@ -62,6 +62,20 @@ export function CitizensPage() {
         setIsFormOpen(false);
         setNotification('Гражданин успешно добавлен');
     };
+
+    useEffect(() => {
+        if (!notification) {
+            return;
+        }
+
+        const timer = setTimeout(() => {
+            setNotification('');
+        }, 3000);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [notification]);
 
     const filteredCitizens = useMemo(() => {
         return filterCitizens({

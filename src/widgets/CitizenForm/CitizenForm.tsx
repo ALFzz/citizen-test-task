@@ -24,6 +24,8 @@ export function CitizenForm({onClose, onSubmit}: CitizenFormProps) {
     const [formData, setFormData] = useState<CitizenFormData>(initialCitizenForm);
     const [errors, setErrors] = useState<CitizenFormErrors>({});
 
+
+
     const handleChange = (
         field: keyof CitizenFormData,
         value: string,
