@@ -239,3 +239,12 @@
         grid-column: auto;
     }
 }
+
+.form-field__input--error {
+    border-color: #dc2626 !important;
+}
+
+.form-field__error {
+    color: #dc2626;
+    font-size: 12px;
+}

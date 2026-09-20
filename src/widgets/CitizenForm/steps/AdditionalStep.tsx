@@ -1,14 +1,15 @@
-import type { CitizenFormData } from '../types';
+import type {CitizenFormData, CitizenFormErrors} from '../types';
 
 type AdditionalStepProps = {
     formData: CitizenFormData;
+    errors: CitizenFormErrors;
     onChange: (
         field: keyof CitizenFormData,
         value: string,
     ) => void;
 };
 
-export function AdditionalStep({formData, onChange,}: AdditionalStepProps) {
+export function AdditionalStep({formData, errors, onChange,}: AdditionalStepProps) {
     return (
         <div className="citizen-form-step">
             <h3>Дополнительные сведения</h3>
@@ -22,6 +23,7 @@ export function AdditionalStep({formData, onChange,}: AdditionalStepProps) {
                     <span>ИНН</span>
 
                     <input
+                        className={errors.inn ? 'form-field__input--error' : ''}
                         type="text"
                         value={formData.inn}
                         onChange={(event) =>
@@ -29,12 +31,19 @@ export function AdditionalStep({formData, onChange,}: AdditionalStepProps) {
                         }
                         placeholder="Введите ИНН"
                     />
+
+                    {errors.inn && (
+                        <span className="form-field__error">
+                            {errors.inn}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field">
                     <span>СНИЛС</span>
 
                     <input
+                        className={errors.snils ? 'form-field__input--error' : ''}
                         type="text"
                         value={formData.snils}
                         onChange={(event) =>
@@ -42,12 +51,19 @@ export function AdditionalStep({formData, onChange,}: AdditionalStepProps) {
                         }
                         placeholder="Введите СНИЛС"
                     />
+
+                    {errors.snils && (
+                        <span className="form-field__error">
+                            {errors.snils}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field">
                     <span>Семейное положение</span>
 
                     <select
+                        className={errors.maritalStatus ? 'form-field__input--error' : ''}
                         value={formData.maritalStatus}
                         onChange={(event) =>
                             onChange(
@@ -76,12 +92,19 @@ export function AdditionalStep({formData, onChange,}: AdditionalStepProps) {
                             Вдовец / вдова
                         </option>
                     </select>
+
+                    {errors.maritalStatus && (
+                        <span className="form-field__error">
+                            {errors.maritalStatus}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field">
                     <span>Образование</span>
 
                     <select
+                        className={errors.education ? 'form-field__input--error' : ''}
                         value={formData.education}
                         onChange={(event) =>
                             onChange(
@@ -106,12 +129,19 @@ export function AdditionalStep({formData, onChange,}: AdditionalStepProps) {
                             Высшее
                         </option>
                     </select>
+
+                    {errors.education && (
+                        <span className="form-field__error">
+                            {errors.education}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field form-field--full">
                     <span>Место работы</span>
 
                     <input
+                        className={errors.workplace ? 'form-field__input--error' : ''}
                         type="text"
                         value={formData.workplace}
                         onChange={(event) =>
@@ -122,6 +152,12 @@ export function AdditionalStep({formData, onChange,}: AdditionalStepProps) {
                         }
                         placeholder="Название организации"
                     />
+
+                    {errors.workplace && (
+                        <span className="form-field__error">
+                            {errors.workplace}
+                        </span>
+                    )}
                 </label>
             </div>
         </div>

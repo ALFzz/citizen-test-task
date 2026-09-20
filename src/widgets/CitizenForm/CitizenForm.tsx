@@ -4,7 +4,8 @@ import './CitizenForm.css';
 import {PersonalStep} from "./steps/PersonalStep.tsx";
 import {ContactsStep} from "./steps/ContactsStep.tsx";
 import {AdditionalStep} from "./steps/AdditionalStep.tsx";
-import {type CitizenFormData, initialCitizenForm} from "./types.ts";
+import {type CitizenFormData, type CitizenFormErrors, initialCitizenForm} from "./types.ts";
+import {validateCitizenFormStep} from "./utils/validateCitizenForm.ts";
 
 type CitizenFormProps = {
     onClose: () => void;
@@ -21,8 +22,8 @@ export function CitizenForm({
                             }: CitizenFormProps) {
 
     const [step, setStep] = useState(1);
-
     const [formData, setFormData] = useState<CitizenFormData>(initialCitizenForm);
+    const [errors, setErrors] = useState<CitizenFormErrors>({});
 
     const handleChange = (
         field: keyof CitizenFormData,
@@ -35,6 +36,15 @@ export function CitizenForm({
     };
 
     const handleNext = () => {
+        const validationErrors =
+            validateCitizenFormStep(step, formData);
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
+        setErrors({});
         setStep((current) => Math.min(current + 1, 3));
     };
 
@@ -99,6 +109,7 @@ export function CitizenForm({
                     {step === 1 && (
                         <PersonalStep
                             formData={formData}
+                            errors={errors}
                             onChange={handleChange}
                         />
                     )}
@@ -106,6 +117,7 @@ export function CitizenForm({
                     {step === 2 && (
                         <ContactsStep
                             formData={formData}
+                            errors={errors}
                             onChange={handleChange}
                         />
                     )}
@@ -113,6 +125,7 @@ export function CitizenForm({
                     {step === 3 && (
                         <AdditionalStep
                             formData={formData}
+                            errors={errors}
                             onChange={handleChange}
                         />
                     )}

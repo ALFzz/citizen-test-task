@@ -43,3 +43,7 @@ export const initialCitizenForm: CitizenFormData = {
     education: '',
     workplace: '',
 };
+
+export type CitizenFormErrors = Partial<
+    Record<keyof CitizenFormData, string>
+>;

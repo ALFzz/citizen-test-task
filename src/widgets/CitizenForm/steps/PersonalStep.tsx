@@ -1,17 +1,15 @@
-import type { CitizenFormData } from '../types';
+import type {CitizenFormData, CitizenFormErrors} from '../types';
 
 type PersonalStepProps = {
     formData: CitizenFormData;
+    errors: CitizenFormErrors;
     onChange: (
         field: keyof CitizenFormData,
         value: string,
     ) => void;
 };
 
-export function PersonalStep({
-                                 formData,
-                                 onChange,
-                             }: PersonalStepProps) {
+export function PersonalStep({formData, errors, onChange,}: PersonalStepProps) {
     return (
         <div className="citizen-form-step">
             <h3>Основные сведения</h3>
@@ -25,6 +23,7 @@ export function PersonalStep({
                     <span>Фамилия</span>
 
                     <input
+                        className={errors.lastName ? 'form-field__input--error' : ''}
                         type="text"
                         value={formData.lastName}
                         onChange={(event) =>
@@ -32,12 +31,19 @@ export function PersonalStep({
                         }
                         placeholder="Введите фамилию"
                     />
+
+                    {errors.lastName && (
+                        <span className="form-field__error">
+                            {errors.lastName}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field">
                     <span>Имя</span>
 
                     <input
+                        className={errors.firstName ? 'form-field__input--error' : ''}
                         type="text"
                         value={formData.firstName}
                         onChange={(event) =>
@@ -45,12 +51,19 @@ export function PersonalStep({
                         }
                         placeholder="Введите имя"
                     />
+
+                    {errors.firstName && (
+                        <span className="form-field__error">
+                            {errors.firstName}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field">
                     <span>Отчество</span>
 
                     <input
+                        className={errors.lastName ? 'form-field__input--error' : ''}
                         type="text"
                         value={formData.middleName}
                         onChange={(event) =>
@@ -58,24 +71,38 @@ export function PersonalStep({
                         }
                         placeholder="Введите отчество"
                     />
+
+                    {errors.middleName && (
+                        <span className="form-field__error">
+                            {errors.middleName}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field">
                     <span>Дата рождения</span>
 
                     <input
+                        className={errors.birthDate ? 'form-field__input--error' : ''}
                         type="date"
                         value={formData.birthDate}
                         onChange={(event) =>
                             onChange('birthDate', event.target.value)
                         }
                     />
+
+                    {errors.birthDate && (
+                        <span className="form-field__error">
+                            {errors.birthDate}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field">
                     <span>Пол</span>
 
                     <select
+                        className={errors.gender ? 'form-field__input--error' : ''}
                         value={formData.gender}
                         onChange={(event) =>
                             onChange('gender', event.target.value)
@@ -88,12 +115,19 @@ export function PersonalStep({
                         <option value="male">Мужской</option>
                         <option value="female">Женский</option>
                     </select>
+
+                    {errors.gender && (
+                        <span className="form-field__error">
+                            {errors.gender}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field">
                     <span>Гражданство</span>
 
                     <select
+                        className={errors.citizenship ? 'form-field__input--error' : ''}
                         value={formData.citizenship}
                         onChange={(event) =>
                             onChange('citizenship', event.target.value)
@@ -112,6 +146,12 @@ export function PersonalStep({
                         </option>
                     </select>
                 </label>
+
+                {errors.citizenship && (
+                    <span className="form-field__error">
+                            {errors.citizenship}
+                        </span>
+                )}
             </div>
         </div>
     );

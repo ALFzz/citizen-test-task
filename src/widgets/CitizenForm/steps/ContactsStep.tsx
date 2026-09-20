@@ -1,14 +1,15 @@
-import type { CitizenFormData } from '../types';
+import type {CitizenFormData, CitizenFormErrors} from '../types';
 
 type ContactsStepProps = {
     formData: CitizenFormData;
+    errors: CitizenFormErrors;
     onChange: (
         field: keyof CitizenFormData,
         value: string,
     ) => void;
 };
 
-export function ContactsStep({formData, onChange,}: ContactsStepProps) {
+export function ContactsStep({formData, errors, onChange,}: ContactsStepProps) {
     return (
         <div className="citizen-form-step">
             <h3>Контактная информация</h3>
@@ -22,6 +23,7 @@ export function ContactsStep({formData, onChange,}: ContactsStepProps) {
                     <span>Телефон</span>
 
                     <input
+                        className={errors.phone ? 'form-field__input--error' : ''}
                         type="tel"
                         value={formData.phone}
                         onChange={(event) =>
@@ -29,12 +31,19 @@ export function ContactsStep({formData, onChange,}: ContactsStepProps) {
                         }
                         placeholder="+7 (___) ___-__-__"
                     />
+
+                    {errors.phone && (
+                        <span className="form-field__error">
+                            {errors.phone}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field">
                     <span>Email</span>
 
                     <input
+                        className={errors.email ? 'form-field__input--error' : ''}
                         type="email"
                         value={formData.email}
                         onChange={(event) =>
@@ -42,12 +51,19 @@ export function ContactsStep({formData, onChange,}: ContactsStepProps) {
                         }
                         placeholder="example@mail.ru"
                     />
+
+                    {errors.email && (
+                        <span className="form-field__error">
+                            {errors.email}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field">
                     <span>Регион</span>
 
                     <select
+                        className={errors.region ? 'form-field__input--error' : ''}
                         value={formData.region}
                         onChange={(event) =>
                             onChange('region', event.target.value)
@@ -67,12 +83,19 @@ export function ContactsStep({formData, onChange,}: ContactsStepProps) {
                             Республика Татарстан
                         </option>
                     </select>
+
+                    {errors.region && (
+                        <span className="form-field__error">
+                            {errors.region}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field">
                     <span>Город</span>
 
                     <input
+                        className={errors.city ? 'form-field__input--error' : ''}
                         type="text"
                         value={formData.city}
                         onChange={(event) =>
@@ -80,12 +103,19 @@ export function ContactsStep({formData, onChange,}: ContactsStepProps) {
                         }
                         placeholder="Введите город"
                     />
+
+                    {errors.city && (
+                        <span className="form-field__error">
+                            {errors.city}
+                        </span>
+                    )}
                 </label>
 
                 <label className="form-field form-field--full">
                     <span>Адрес</span>
 
                     <input
+                        className={errors.address ? 'form-field__input--error' : ''}
                         type="text"
                         value={formData.address}
                         onChange={(event) =>
@@ -93,6 +123,12 @@ export function ContactsStep({formData, onChange,}: ContactsStepProps) {
                         }
                         placeholder="Улица, дом, квартира"
                     />
+
+                    {errors.address && (
+                        <span className="form-field__error">
+                            {errors.address}
+                        </span>
+                    )}
                 </label>
             </div>
         </div>
