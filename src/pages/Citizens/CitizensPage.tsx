@@ -1,66 +1,98 @@
-import { useMemo, useState } from 'react';
-
-import { citizens } from '../../entities/citizen/data';
+import {useEffect, useMemo, useState} from 'react';
+import { citizens as initialCitizens  } from '../../entities/citizen/data';
 import type {
     Citizen,
     CitizenStatus,
     Gender,
 } from '../../entities/citizen/types';
-
+import {filterCitizens} from "./utils/filterCitizens.ts";
 import { CitizenList } from '../../widgets/CitizenList/CitizenList';
 import { CitizenProfile } from '../../widgets/CitizenProfile/CitizenProfile';
-
+import {CitizenFilters} from "../../widgets/CitizenFilters/CItizenFilters.tsx";
+import {PageHeader} from "../../widgets/PageHeader/PageHeader.tsx";
 import './CitizensPage.css';
+import {CitizenForm} from "../../widgets/CitizenForm/CitizenForm.tsx";
+import type {CitizenFormData} from "../../widgets/CitizenForm/types.ts";
 
-console.log(citizens)
+
 export function CitizensPage() {
     const [search, setSearch] = useState('');
     const [region, setRegion] = useState('');
-    const [status, setStatus] =
-        useState<CitizenStatus | ''>('');
-    const [gender, setGender] =
-        useState<Gender | ''>('');
+    const [status, setStatus] = useState<CitizenStatus | ''>('');
+    const [gender, setGender] = useState<Gender | ''>('');
+    const [notification, setNotification] = useState('');
 
+    const [citizens, setCitizens] = useState(initialCitizens);
     const [selectedCitizenId, setSelectedCitizenId] =
         useState<string | null>(citizens[0]?.id ?? null);
 
+    const [isFormOpen, setIsFormOpen] = useState(false);
+
+    const handleCreateCitizen = (formData: CitizenFormData) => {
+        const newCitizen: Citizen = {
+            id: `CIT-${Date.now()}`,
+
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            middleName: formData.middleName,
+
+            birthDate: formData.birthDate,
+            citizenship: formData.citizenship,
+            gender: formData.gender as Gender,
+
+            phone: formData.phone,
+            email: formData.email,
+
+            region: formData.region,
+            city: formData.city,
+            address: formData.address,
+
+            inn: formData.inn,
+            snils: formData.snils,
+
+            status: 'verification',
+
+            family: [],
+            education: [],
+            documents: [],
+        };
+
+        setCitizens((current) => [newCitizen, ...current]);
+        setSelectedCitizenId(newCitizen.id);
+        setIsFormOpen(false);
+        setNotification('Гражданин успешно добавлен');
+    };
+
+    useEffect(() => {
+        if (!notification) {
+            return;
+        }
+
+        const timer = setTimeout(() => {
+            setNotification('');
+        }, 3000);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [notification]);
+
     const filteredCitizens = useMemo(() => {
-        const normalizedSearch =
-            search.trim().toLowerCase();
-
-        return citizens.filter((citizen) => {
-            const fullName =
-                `${citizen.lastName} ${citizen.firstName} ${citizen.middleName}`
-                    .toLowerCase();
-
-            const matchesSearch =
-                !normalizedSearch ||
-                fullName.includes(normalizedSearch) ||
-                citizen.id.toLowerCase().includes(normalizedSearch) ||
-                citizen.phone.includes(normalizedSearch);
-
-            const matchesRegion =
-                !region || citizen.region === region;
-
-            const matchesStatus =
-                !status || citizen.status === status;
-
-            const matchesGender =
-                !gender || citizen.gender === gender;
-
-            return (
-                matchesSearch &&
-                matchesRegion &&
-                matchesStatus &&
-                matchesGender
-            );
+        return filterCitizens({
+            citizens,
+            search,
+            region,
+            status,
+            gender,
         });
-    }, [search, region, status, gender]);
+    }, [citizens, search, region, status, gender]);
 
     const selectedCitizen =
         filteredCitizens.find(
             (citizen) => citizen.id === selectedCitizenId,
-        ) ?? null;
+        ) ??
+        filteredCitizens[0] ??
+        null;
 
     const handleSelectCitizen = (citizen: Citizen) => {
         setSelectedCitizenId(citizen.id);
@@ -75,93 +107,31 @@ export function CitizensPage() {
 
     return (
         <div className="citizens-page">
-            <div className="citizens-page-header">
-                <div>
-          <span className="page-breadcrumb">
-            Рабочая область / Картотека
-          </span>
+            <PageHeader
+                breadcrumb="Рабочая область / Картотека"
+                title="Граждане"
+                description="Управление и просмотр информации о гражданах"
+                actionLabel="Добавить гражданина"
+                onAction={() => setIsFormOpen(true)}
+            />
 
-                    <h1>Граждане</h1>
-
-                    <p>
-                        Управление и просмотр информации о гражданах
-                    </p>
+            {notification && (
+                <div className="notification">
+                    {notification}
                 </div>
+            )}
 
-                <button
-                    className="primary-button"
-                    type="button"
-                >
-                    + Добавить гражданина
-                </button>
-            </div>
-
-            <section className="citizens-toolbar">
-                <div className="citizens-search">
-                    <span>⌕</span>
-
-                    <input
-                        value={search}
-                        onChange={(event) =>
-                            setSearch(event.target.value)
-                        }
-                        placeholder="Поиск по ФИО, ID или телефону"
-                    />
-                </div>
-
-                <select
-                    value={region}
-                    onChange={(event) =>
-                        setRegion(event.target.value)
-                    }
-                >
-                    <option value="">Все регионы</option>
-                    <option value="Москва">Москва</option>
-                    <option value="Санкт-Петербург">
-                        Санкт-Петербург
-                    </option>
-                    <option value="Республика Татарстан">
-                        Республика Татарстан
-                    </option>
-                </select>
-
-                <select
-                    value={status}
-                    onChange={(event) =>
-                        setStatus(
-                            event.target.value as CitizenStatus | '',
-                        )
-                    }
-                >
-                    <option value="">Все статусы</option>
-                    <option value="active">Активен</option>
-                    <option value="verification">Проверка</option>
-                    <option value="blocked">Заблокирован</option>
-                </select>
-
-                <select
-                    value={gender}
-                    onChange={(event) =>
-                        setGender(
-                            event.target.value as Gender | '',
-                        )
-                    }
-                >
-                    <option value="">Любой пол</option>
-                    <option value="male">Мужской</option>
-                    <option value="female">Женский</option>
-                </select>
-
-                {(search || region || status || gender) && (
-                    <button
-                        className="reset-button"
-                        type="button"
-                        onClick={handleResetFilters}
-                    >
-                        Сбросить
-                    </button>
-                )}
-            </section>
+            <CitizenFilters
+                search={search}
+                region={region}
+                status={status}
+                gender={gender}
+                onSearchChange={setSearch}
+                onRegionChange={setRegion}
+                onStatusChange={setStatus}
+                onGenderChange={setGender}
+                onReset={handleResetFilters}
+            />
 
             <div className="citizens-summary">
                 <div>
@@ -187,6 +157,13 @@ export function CitizensPage() {
 
                 <CitizenProfile citizen={selectedCitizen} />
             </div>
+
+            {isFormOpen && (
+                <CitizenForm
+                    onClose={() => setIsFormOpen(false)}
+                    onSubmit={handleCreateCitizen}
+                />
+            )}
         </div>
     );
 }
