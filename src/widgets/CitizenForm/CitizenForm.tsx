@@ -4,6 +4,7 @@ import './CitizenForm.css';
 import {PersonalStep} from "./steps/PersonalStep.tsx";
 import {ContactsStep} from "./steps/ContactsStep.tsx";
 import {AdditionalStep} from "./steps/AdditionalStep.tsx";
+import {type CitizenFormData, initialCitizenForm} from "./types.ts";
 
 type CitizenFormProps = {
     onClose: () => void;
@@ -18,7 +19,20 @@ const steps = [
 export function CitizenForm({
                                 onClose,
                             }: CitizenFormProps) {
+
     const [step, setStep] = useState(1);
+
+    const [formData, setFormData] = useState<CitizenFormData>(initialCitizenForm);
+
+    const handleChange = (
+        field: keyof CitizenFormData,
+        value: string,
+    ) => {
+        setFormData((current) => ({
+            ...current,
+            [field]: value,
+        }));
+    };
 
     const handleNext = () => {
         setStep((current) => Math.min(current + 1, 3));
@@ -82,11 +96,26 @@ export function CitizenForm({
                 </nav>
 
                 <main className="citizen-form__content">
-                    {step === 1 && <PersonalStep />}
+                    {step === 1 && (
+                        <PersonalStep
+                            formData={formData}
+                            onChange={handleChange}
+                        />
+                    )}
 
-                    {step === 2 && <ContactsStep />}
+                    {step === 2 && (
+                        <ContactsStep
+                            formData={formData}
+                            onChange={handleChange}
+                        />
+                    )}
 
-                    {step === 3 && <AdditionalStep />}
+                    {step === 3 && (
+                        <AdditionalStep
+                            formData={formData}
+                            onChange={handleChange}
+                        />
+                    )}
                 </main>
 
                 <footer className="citizen-form__footer">
