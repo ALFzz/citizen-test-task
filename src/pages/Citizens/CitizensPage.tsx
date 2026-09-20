@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { citizens } from '../../entities/citizen/data';
+import { citizens as initialCitizens  } from '../../entities/citizen/data';
 import type {
     Citizen,
     CitizenStatus,
@@ -12,20 +12,53 @@ import {CitizenFilters} from "../../widgets/CitizenFilters/CItizenFilters.tsx";
 import {PageHeader} from "../../widgets/PageHeader/PageHeader.tsx";
 import './CitizensPage.css';
 import {CitizenForm} from "../../widgets/CitizenForm/CitizenForm.tsx";
+import type {CitizenFormData} from "../../widgets/CitizenForm/types.ts";
 
 
 export function CitizensPage() {
     const [search, setSearch] = useState('');
     const [region, setRegion] = useState('');
-    const [status, setStatus] =
-        useState<CitizenStatus | ''>('');
-    const [gender, setGender] =
-        useState<Gender | ''>('');
+    const [status, setStatus] = useState<CitizenStatus | ''>('');
+    const [gender, setGender] = useState<Gender | ''>('');
 
+    const [citizens, setCitizens] = useState(initialCitizens);
     const [selectedCitizenId, setSelectedCitizenId] =
         useState<string | null>(citizens[0]?.id ?? null);
 
     const [isFormOpen, setIsFormOpen] = useState(false);
+
+    const handleCreateCitizen = (formData: CitizenFormData) => {
+        const newCitizen: Citizen = {
+            id: `CIT-${Date.now()}`,
+
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            middleName: formData.middleName,
+
+            birthDate: formData.birthDate,
+            citizenship: formData.citizenship,
+            gender: formData.gender as Gender,
+
+            phone: formData.phone,
+            email: formData.email,
+
+            region: formData.region,
+            city: formData.city,
+            address: formData.address,
+
+            inn: formData.inn,
+            snils: formData.snils,
+
+            status: 'verification',
+
+            family: [],
+            education: [],
+            documents: [],
+        };
+
+        setCitizens((current) => [newCitizen, ...current]);
+        setIsFormOpen(false);
+    };
 
     const filteredCitizens = useMemo(() => {
         return filterCitizens({
@@ -35,7 +68,7 @@ export function CitizensPage() {
             status,
             gender,
         });
-    }, [search, region, status, gender]);
+    }, [citizens, search, region, status, gender]);
 
     const selectedCitizen =
         filteredCitizens.find(
@@ -105,6 +138,7 @@ export function CitizensPage() {
             {isFormOpen && (
                 <CitizenForm
                     onClose={() => setIsFormOpen(false)}
+                    onSubmit={handleCreateCitizen}
                 />
             )}
         </div>
