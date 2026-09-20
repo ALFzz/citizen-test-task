@@ -30,9 +30,21 @@
     line-height: 1;
 }
 
+.dashboard-charts {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+
 @media (max-width: 1000px) {
     .dashboard-stats {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-charts {
+        grid-template-columns: 1fr;
     }
 }
 
