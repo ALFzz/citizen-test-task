@@ -55,8 +55,22 @@ export type FamilyMemberErrors = {
     birthDate?: string;
 };
 
+export type EducationErrors = {
+    institution?: string;
+    degree?: string;
+    specialty?: string;
+    graduationYear?: string;
+};
+
 export type CitizenFormErrors = Partial<
-    Record<Exclude<keyof CitizenFormData, 'family'>, string>
+    Record<
+        Exclude<
+            keyof CitizenFormData,
+            'family' | 'education'
+        >,
+        string
+    >
 > & {
     family?: Record<string, FamilyMemberErrors>;
+    education?: Record<string, EducationErrors>;
 };

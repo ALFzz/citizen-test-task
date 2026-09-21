@@ -1,6 +1,6 @@
 import type {
     CitizenFormData,
-    CitizenFormErrors, FamilyMemberErrors,
+    CitizenFormErrors, EducationErrors, FamilyMemberErrors,
 } from '../types';
 
 export function validateCitizenFormStep(
@@ -105,6 +105,47 @@ export function validateCitizenFormStep(
 
         if (Object.keys(familyErrors).length > 0) {
             errors.family = familyErrors;
+        }
+
+        const educationErrors: Record<
+            string,
+            EducationErrors
+        > = {};
+
+        formData.education.forEach((education) => {
+            const itemErrors: EducationErrors = {};
+
+            if (!education.institution.trim()) {
+                itemErrors.institution =
+                    'Введите учебное заведение';
+            }
+
+            if (!education.degree.trim()) {
+                itemErrors.degree =
+                    'Укажите степень / уровень';
+            }
+
+            if (!education.specialty.trim()) {
+                itemErrors.specialty =
+                    'Укажите специальность';
+            }
+
+            if (
+                !education.graduationYear ||
+                education.graduationYear < 1900 ||
+                education.graduationYear > new Date().getFullYear()
+            ) {
+                itemErrors.graduationYear =
+                    'Укажите корректный год окончания';
+            }
+
+            if (Object.keys(itemErrors).length > 0) {
+                educationErrors[education.id] = itemErrors;
+            }
+        });
+
+        if (Object.keys(educationErrors).length > 0) {
+            errors.education = educationErrors;
         }
     }
 
