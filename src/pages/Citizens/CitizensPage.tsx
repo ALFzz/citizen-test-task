@@ -13,6 +13,7 @@ import {PageHeader} from "../../widgets/PageHeader/PageHeader.tsx";
 import './CitizensPage.css';
 import {CitizenForm} from "../../widgets/CitizenForm/CitizenForm.tsx";
 import type {CitizenFormData} from "../../widgets/CitizenForm/types.ts";
+import {DeleteCitizenModal} from "../../widgets/DeleteCitizenModal/DeleteCitizenModal.tsx";
 
 
 export function CitizensPage() {
@@ -27,6 +28,8 @@ export function CitizensPage() {
         useState<string | null>(citizens[0]?.id ?? null);
 
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const handleCreateCitizen = (formData: CitizenFormData) => {
         const newCitizen: Citizen = {
@@ -52,15 +55,66 @@ export function CitizensPage() {
 
             status: 'verification',
 
-            family: [],
-            education: [],
-            documents: [],
+            family: formData.family,
+            education: formData.education,
+            documents: formData.documents,
         };
 
         setCitizens((current) => [newCitizen, ...current]);
         setSelectedCitizenId(newCitizen.id);
         setIsFormOpen(false);
         setNotification('Гражданин успешно добавлен');
+    };
+
+    const handleUpdateCitizen = (
+        formData: CitizenFormData,
+    ) => {
+        if (!selectedCitizen) {
+            return;
+        }
+
+        setCitizens((current) =>
+            current.map((citizen) =>
+                citizen.id === selectedCitizen.id
+                    ? {
+                        ...citizen,
+                        lastName: formData.lastName,
+                        firstName: formData.firstName,
+                        middleName: formData.middleName,
+                        birthDate: formData.birthDate,
+                        gender: formData.gender as Gender,
+                        citizenship: formData.citizenship,
+                        phone: formData.phone,
+                        email: formData.email,
+                        region: formData.region,
+                        city: formData.city,
+                        address: formData.address,
+                        inn: formData.inn,
+                        snils: formData.snils,
+                        family: formData.family,
+                        education: formData.education,
+                        documents: formData.documents
+                    }
+                    : citizen,
+            ),
+        );
+
+        setIsEditFormOpen(false);
+        setNotification('Данные гражданина обновлены');
+    };
+
+    const handleDeleteCitizen = () => {
+        if (!selectedCitizen) {
+            return;
+        }
+
+        setCitizens((current) =>
+            current.filter((citizen) => citizen.id !== selectedCitizen.id),
+        );
+
+        setSelectedCitizenId(null);
+        setIsDeleteModalOpen(false);
+        setNotification('Гражданин удалён');
     };
 
     useEffect(() => {
@@ -104,6 +158,9 @@ export function CitizensPage() {
         setStatus('');
         setGender('');
     };
+
+    console.log('isDeleteModalOpen:', isDeleteModalOpen);
+    console.log(selectedCitizen)
 
     return (
         <div className="citizens-page">
@@ -155,13 +212,62 @@ export function CitizensPage() {
                     onSelect={handleSelectCitizen}
                 />
 
-                <CitizenProfile citizen={selectedCitizen} />
+                <CitizenProfile
+                    citizen={selectedCitizen}
+                    onEdit={() => setIsEditFormOpen(true)}
+                    onDelete={() => {
+                        console.log('delete clicked');
+                        setIsDeleteModalOpen(true);
+                    }}
+                />
             </div>
 
             {isFormOpen && (
                 <CitizenForm
                     onClose={() => setIsFormOpen(false)}
                     onSubmit={handleCreateCitizen}
+                />
+            )}
+
+            {isEditFormOpen && selectedCitizen && (
+                <CitizenForm
+                    mode="edit"
+                    initialData={{
+                        lastName: selectedCitizen.lastName,
+                        firstName: selectedCitizen.firstName,
+                        middleName: selectedCitizen.middleName,
+                        birthDate: selectedCitizen.birthDate,
+                        gender: selectedCitizen.gender,
+                        citizenship: selectedCitizen.citizenship,
+                        phone: selectedCitizen.phone,
+                        email: selectedCitizen.email,
+                        region: selectedCitizen.region,
+                        city: selectedCitizen.city,
+                        address: selectedCitizen.address,
+                        inn: selectedCitizen.inn,
+                        snils: selectedCitizen.snils,
+                        maritalStatus: '',
+                        workplace: '',
+                        family: selectedCitizen.family,
+                        education: selectedCitizen.education,
+                        documents: selectedCitizen.documents
+                    }}
+                    onClose={() => setIsEditFormOpen(false)}
+                    onSubmit={handleUpdateCitizen}
+                />
+            )}
+
+            {isDeleteModalOpen && selectedCitizen && (
+                <DeleteCitizenModal
+                    citizenName={[
+                        selectedCitizen.lastName,
+                        selectedCitizen.firstName,
+                        selectedCitizen.middleName,
+                    ]
+                        .filter(Boolean)
+                        .join(' ')}
+                    onClose={() => setIsDeleteModalOpen(false)}
+                    onConfirm={handleDeleteCitizen}
                 />
             )}
         </div>

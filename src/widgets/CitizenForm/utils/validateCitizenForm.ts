@@ -1,6 +1,6 @@
 import type {
     CitizenFormData,
-    CitizenFormErrors,
+    CitizenFormErrors, DocumentErrors, EducationErrors, FamilyMemberErrors,
 } from '../types';
 
 export function validateCitizenFormStep(
@@ -74,6 +74,104 @@ export function validateCitizenFormStep(
             )
         ) {
             errors.snils = 'Введите корректный СНИЛС';
+        }
+
+        const familyErrors: Record<
+            string,
+            FamilyMemberErrors
+        > = {};
+
+        formData.family.forEach((member) => {
+            const memberErrors: FamilyMemberErrors = {};
+
+            if (!member.fullName.trim()) {
+                memberErrors.fullName = 'Введите ФИО';
+            }
+
+            if (!member.relationship.trim()) {
+                memberErrors.relationship =
+                    'Укажите степень родства';
+            }
+
+            if (!member.birthDate) {
+                memberErrors.birthDate =
+                    'Укажите дату рождения';
+            }
+
+            if (Object.keys(memberErrors).length > 0) {
+                familyErrors[member.id] = memberErrors;
+            }
+        });
+
+        if (Object.keys(familyErrors).length > 0) {
+            errors.family = familyErrors;
+        }
+
+        const educationErrors: Record<
+            string,
+            EducationErrors
+        > = {};
+
+        formData.education.forEach((education) => {
+            const itemErrors: EducationErrors = {};
+
+            if (!education.institution.trim()) {
+                itemErrors.institution =
+                    'Введите учебное заведение';
+            }
+
+            if (!education.degree.trim()) {
+                itemErrors.degree =
+                    'Укажите степень / уровень';
+            }
+
+            if (!education.specialty.trim()) {
+                itemErrors.specialty =
+                    'Укажите специальность';
+            }
+
+            if (
+                !education.graduationYear ||
+                education.graduationYear < 1900 ||
+                education.graduationYear > new Date().getFullYear()
+            ) {
+                itemErrors.graduationYear =
+                    'Укажите корректный год окончания';
+            }
+
+            if (Object.keys(itemErrors).length > 0) {
+                educationErrors[education.id] = itemErrors;
+            }
+        });
+
+        if (Object.keys(educationErrors).length > 0) {
+            errors.education = educationErrors;
+        }
+
+        const documentErrors: Record<string, DocumentErrors> = {};
+
+        formData.documents.forEach((document) => {
+            const itemErrors: DocumentErrors = {};
+
+            if (!document.type) {
+                itemErrors.type = 'Выберите тип документа';
+            }
+
+            if (!document.number.trim()) {
+                itemErrors.number = 'Введите номер документа';
+            }
+
+            if (!document.issueDate) {
+                itemErrors.issueDate = 'Укажите дату выдачи';
+            }
+
+            if (Object.keys(itemErrors).length > 0) {
+                documentErrors[document.id] = itemErrors;
+            }
+        });
+
+        if (Object.keys(documentErrors).length > 0) {
+            errors.documents = documentErrors;
         }
     }
 

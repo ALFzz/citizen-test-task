@@ -10,6 +10,8 @@ import {validateCitizenFormStep} from "./utils/validateCitizenForm.ts";
 type CitizenFormProps = {
     onClose: () => void;
     onSubmit: (formData: CitizenFormData) => void;
+    initialData?: CitizenFormData;
+    mode?: 'create' | 'edit';
 };
 
 const steps = [
@@ -18,13 +20,43 @@ const steps = [
     'Дополнительно',
 ];
 
-export function CitizenForm({onClose, onSubmit}: CitizenFormProps) {
+export function CitizenForm({
+                                onClose,
+                                onSubmit,
+                                initialData = initialCitizenForm,
+                                mode = 'create',
+                            }: CitizenFormProps)  {
 
     const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState<CitizenFormData>(initialCitizenForm);
+    const [formData, setFormData] = useState<CitizenFormData>(initialData);
     const [errors, setErrors] = useState<CitizenFormErrors>({});
 
+    const handleFamilyChange = (
+        family: CitizenFormData['family'],
+    ) => {
+        setFormData((current) => ({
+            ...current,
+            family,
+        }));
+    };
 
+    const handleEducationChange = (
+        education: CitizenFormData['education'],
+    ) => {
+        setFormData((current) => ({
+            ...current,
+            education,
+        }));
+    };
+
+    const handleDocumentsChange = (
+        documents: CitizenFormData['documents'],
+    ) => {
+        setFormData((current) => ({
+            ...current,
+            documents,
+        }));
+    };
 
     const handleChange = (
         field: keyof CitizenFormData,
@@ -140,6 +172,9 @@ export function CitizenForm({onClose, onSubmit}: CitizenFormProps) {
                             formData={formData}
                             errors={errors}
                             onChange={handleChange}
+                            onFamilyChange={handleFamilyChange}
+                            onEducationChange={handleEducationChange}
+                            onDocumentsChange={handleDocumentsChange}
                         />
                     )}
                 </main>
@@ -167,7 +202,7 @@ export function CitizenForm({onClose, onSubmit}: CitizenFormProps) {
                             type="button"
                             onClick={handleSubmit}
                         >
-                            Создать гражданина
+                            {mode === 'edit' ? 'Сохранить изменения' : 'Создать'}
                         </button>
                     )}
                 </footer>

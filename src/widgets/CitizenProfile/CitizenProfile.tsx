@@ -1,12 +1,14 @@
 import { useState } from 'react';
 
-import type { Citizen } from '../../entities/citizen/types';
+import type { Citizen, DocumentType } from '../../entities/citizen/types';
 
 import './CitizenProfile.css';
 
-interface CitizenProfileProps {
-    citizen: Citizen | null;
-}
+type CitizenProfileProps = {
+    citizen: Citizen;
+    onEdit: () => void;
+    onDelete: () => void;
+};
 
 type ProfileTab = 'general' | 'family' | 'education' | 'documents';
 
@@ -29,7 +31,7 @@ const tabs: Array<{ id: ProfileTab; label: string; }> = [
     },
 ];
 
-export function CitizenProfile({citizen,}: CitizenProfileProps) {
+export function CitizenProfile({citizen, onEdit, onDelete}: CitizenProfileProps) {
     const [activeTab, setActiveTab] = useState<ProfileTab>('general');
 
     if (!citizen) {
@@ -62,16 +64,25 @@ export function CitizenProfile({citizen,}: CitizenProfileProps) {
                         </h2>
 
                         <span>
-              {citizen.id} · {getAge(citizen.birthDate)} лет
-            </span>
+                            {citizen.id} · {getAge(citizen.birthDate)} лет
+                        </span>
                     </div>
                 </div>
 
                 <button
                     className="profile-edit-button"
                     type="button"
+                    onClick={onEdit}
                 >
                     Редактировать
+                </button>
+
+                <button
+                    className="danger-button"
+                    type="button"
+                    onClick={onDelete}
+                >
+                    Удалить
                 </button>
             </div>
 
@@ -279,7 +290,20 @@ function EducationTab({citizen,}: { citizen: Citizen; }) {
     );
 }
 
-function DocumentsTab({citizen,}: { citizen: Citizen; }) {
+function DocumentsTab({ citizen }: { citizen: Citizen }) {
+    const documentTypeLabels: Record<Exclude<DocumentType, ''>, string> = {
+        passport: 'Паспорт',
+        birth_certificate: 'Свидетельство о рождении',
+        snils: 'СНИЛС',
+        inn: 'ИНН',
+    };
+
+    const documentStatusLabels = {
+        active: 'Действующий',
+        expired: 'Просрочен',
+        replaced: 'Заменён',
+    };
+
     return (
         <ProfileSection title="Документы">
             {citizen.documents.length > 0 ? (
@@ -290,12 +314,18 @@ function DocumentsTab({citizen,}: { citizen: Citizen; }) {
                             key={document.id}
                         >
                             <div>
-                                <strong>{document.type}</strong>
+                                <strong>
+                                    {document.type
+                                        ? documentTypeLabels[document.type]
+                                        : 'Тип не указан'}
+                                </strong>
 
                                 <span>{document.number}</span>
                             </div>
 
-                            <span>{document.status}</span>
+                            <span>
+                                {documentStatusLabels[document.status]}
+                            </span>
                         </div>
                     ))}
                 </div>

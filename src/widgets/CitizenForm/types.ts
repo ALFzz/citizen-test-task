@@ -1,5 +1,8 @@
 import type {
+    Education,
+    FamilyMember,
     Gender,
+    Document
 } from '../../entities/citizen/types';
 
 export type CitizenFormData = {
@@ -19,8 +22,11 @@ export type CitizenFormData = {
     inn: string;
     snils: string;
     maritalStatus: string;
-    education: string;
     workplace: string;
+
+    family: FamilyMember[],
+    education: Education[],
+    documents: Document[]
 };
 
 export const initialCitizenForm: CitizenFormData = {
@@ -40,10 +46,41 @@ export const initialCitizenForm: CitizenFormData = {
     inn: '',
     snils: '',
     maritalStatus: '',
-    education: '',
     workplace: '',
+    family: [],
+    education: [],
+    documents: []
+};
+
+export type FamilyMemberErrors = {
+    fullName?: string;
+    relationship?: string;
+    birthDate?: string;
+};
+
+export type EducationErrors = {
+    institution?: string;
+    degree?: string;
+    specialty?: string;
+    graduationYear?: string;
+};
+
+export type DocumentErrors = {
+    type?: string;
+    number?: string;
+    issueDate?: string;
 };
 
 export type CitizenFormErrors = Partial<
-    Record<keyof CitizenFormData, string>
->;
+    Record<
+        Exclude<
+            keyof CitizenFormData,
+            'family' | 'education' | 'documents'
+        >,
+        string
+    >
+> & {
+    family?: Record<string, FamilyMemberErrors>;
+    education?: Record<string, EducationErrors>;
+    documents?: Record<string, DocumentErrors>;
+};

@@ -178,6 +178,32 @@
     gap: 16px;
 }
 
+.danger-button {
+    border: 1px solid #fecaca;
+    border-radius: 7px;
+    padding: 7px 11px;
+    background: #dc2626;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+}
+
+.danger-button:hover {
+    background: #b91c1c;
+}
+
+.danger-button:active {
+    background: #991b1b;
+}
+
+.danger-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 @media (max-width: 1200px) {
     .citizens-workspace {
         grid-template-columns: 1fr;
