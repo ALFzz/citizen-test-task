@@ -7,6 +7,7 @@ import './CitizenProfile.css';
 type CitizenProfileProps = {
     citizen: Citizen;
     onEdit: () => void;
+    onDelete: () => void;
 };
 
 type ProfileTab = 'general' | 'family' | 'education' | 'documents';
@@ -30,7 +31,7 @@ const tabs: Array<{ id: ProfileTab; label: string; }> = [
     },
 ];
 
-export function CitizenProfile({citizen, onEdit}: CitizenProfileProps) {
+export function CitizenProfile({citizen, onEdit, onDelete}: CitizenProfileProps) {
     const [activeTab, setActiveTab] = useState<ProfileTab>('general');
 
     if (!citizen) {
@@ -63,8 +64,8 @@ export function CitizenProfile({citizen, onEdit}: CitizenProfileProps) {
                         </h2>
 
                         <span>
-              {citizen.id} · {getAge(citizen.birthDate)} лет
-            </span>
+                            {citizen.id} · {getAge(citizen.birthDate)} лет
+                        </span>
                     </div>
                 </div>
 
@@ -74,6 +75,14 @@ export function CitizenProfile({citizen, onEdit}: CitizenProfileProps) {
                     onClick={onEdit}
                 >
                     Редактировать
+                </button>
+
+                <button
+                    className="danger-button"
+                    type="button"
+                    onClick={onDelete}
+                >
+                    Удалить
                 </button>
             </div>
 
