@@ -57,7 +57,7 @@ export function CitizensPage() {
 
             family: formData.family,
             education: formData.education,
-            documents: [],
+            documents: formData.documents,
         };
 
         setCitizens((current) => [newCitizen, ...current]);
@@ -92,7 +92,8 @@ export function CitizensPage() {
                         inn: formData.inn,
                         snils: formData.snils,
                         family: formData.family,
-                        education: formData.education
+                        education: formData.education,
+                        documents: formData.documents
                     }
                     : citizen,
             ),
@@ -248,7 +249,8 @@ export function CitizensPage() {
                         maritalStatus: '',
                         workplace: '',
                         family: selectedCitizen.family,
-                        education: selectedCitizen.education
+                        education: selectedCitizen.education,
+                        documents: selectedCitizen.documents
                     }}
                     onClose={() => setIsEditFormOpen(false)}
                     onSubmit={handleUpdateCitizen}

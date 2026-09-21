@@ -1,6 +1,6 @@
 import type {
     CitizenFormData,
-    CitizenFormErrors, EducationErrors, FamilyMemberErrors,
+    CitizenFormErrors, DocumentErrors, EducationErrors, FamilyMemberErrors,
 } from '../types';
 
 export function validateCitizenFormStep(
@@ -146,6 +146,32 @@ export function validateCitizenFormStep(
 
         if (Object.keys(educationErrors).length > 0) {
             errors.education = educationErrors;
+        }
+
+        const documentErrors: Record<string, DocumentErrors> = {};
+
+        formData.documents.forEach((document) => {
+            const itemErrors: DocumentErrors = {};
+
+            if (!document.type) {
+                itemErrors.type = 'Выберите тип документа';
+            }
+
+            if (!document.number.trim()) {
+                itemErrors.number = 'Введите номер документа';
+            }
+
+            if (!document.issueDate) {
+                itemErrors.issueDate = 'Укажите дату выдачи';
+            }
+
+            if (Object.keys(itemErrors).length > 0) {
+                documentErrors[document.id] = itemErrors;
+            }
+        });
+
+        if (Object.keys(documentErrors).length > 0) {
+            errors.documents = documentErrors;
         }
     }
 

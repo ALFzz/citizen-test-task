@@ -4,9 +4,11 @@ import type {
 } from '../types';
 
 import type {
+    Document,
+    DocumentType,
     Education,
     FamilyMember,
-} from '../../../entities/citizen/types.ts';
+} from '../../../entities/citizen/types';
 
 type AdditionalStepProps = {
     formData: CitizenFormData;
@@ -17,6 +19,7 @@ type AdditionalStepProps = {
     ) => void;
     onFamilyChange: (family: FamilyMember[]) => void;
     onEducationChange: (education: Education[]) => void;
+    onDocumentsChange: (documents: Document[]) => void;
 };
 
 export function AdditionalStep({
@@ -25,6 +28,7 @@ export function AdditionalStep({
                                    onChange,
                                    onFamilyChange,
                                    onEducationChange,
+                                   onDocumentsChange,
                                }: AdditionalStepProps) {
     return (
         <div className="citizen-form-step">
@@ -168,6 +172,7 @@ export function AdditionalStep({
                 <div className="family-section__header">
                     <div>
                         <h4>Члены семьи</h4>
+
                         <p>
                             Добавьте родственников гражданина
                         </p>
@@ -369,10 +374,11 @@ export function AdditionalStep({
 
             {/* Образование */}
 
-            <div className="family-section education-section">
+            <div className="education-section">
                 <div className="family-section__header">
                     <div>
                         <h4>Образование</h4>
+
                         <p>
                             Добавьте сведения об образовании
                         </p>
@@ -582,9 +588,7 @@ export function AdditionalStep({
                                                                     ...item,
                                                                     graduationYear:
                                                                         Number(
-                                                                            event
-                                                                                .target
-                                                                                .value,
+                                                                            event.target.value,
                                                                         ),
                                                                 }
                                                                 : item,
@@ -613,6 +617,253 @@ export function AdditionalStep({
                                                     (item) =>
                                                         item.id !==
                                                         education.id,
+                                                ),
+                                            );
+                                        }}
+                                    >
+                                        Удалить
+                                    </button>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
+
+            {/* Документы */}
+
+            <div className="documents-section">
+                <div className="family-section__header">
+                    <div>
+                        <h4>Документы</h4>
+
+                        <p>
+                            Добавьте документы гражданина
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        className="secondary-button"
+                        onClick={() => {
+                            const newDocument: Document = {
+                                id: `DOC-${Date.now()}`,
+                                type: '',
+                                number: '',
+                                issueDate: '',
+                                status: 'active',
+                            };
+
+                            onDocumentsChange([
+                                ...formData.documents,
+                                newDocument,
+                            ]);
+                        }}
+                    >
+                        + Добавить
+                    </button>
+                </div>
+
+                {formData.documents.length === 0 ? (
+                    <div className="family-section__empty">
+                        Документы не добавлены
+                    </div>
+                ) : (
+                    <div className="family-list">
+                        {formData.documents.map((document) => {
+                            const documentErrors =
+                                errors.documents?.[document.id];
+
+                            return (
+                                <div
+                                    className="family-item documents-item"
+                                    key={document.id}
+                                >
+                                    <div
+                                        className={`form-field ${
+                                            documentErrors?.type
+                                                ? 'form-field--error'
+                                                : ''
+                                        }`}
+                                    >
+                                        <select
+                                            className={
+                                                documentErrors?.type
+                                                    ? 'form-field__input--error'
+                                                    : ''
+                                            }
+                                            value={document.type}
+                                            onChange={(event) => {
+                                                onDocumentsChange(
+                                                    formData.documents.map(
+                                                        (item) =>
+                                                            item.id ===
+                                                            document.id
+                                                                ? {
+                                                                    ...item,
+                                                                    type: event.target.value as DocumentType,
+                                                                }
+                                                                : item,
+                                                    ),
+                                                );
+                                            }}
+                                        >
+                                            <option
+                                                value=""
+                                                disabled
+                                            >
+                                                Тип документа
+                                            </option>
+
+                                            <option value="passport">
+                                                Паспорт
+                                            </option>
+
+                                            <option value="birth_certificate">
+                                                Свидетельство о рождении
+                                            </option>
+
+                                            <option value="snils">
+                                                СНИЛС
+                                            </option>
+
+                                            <option value="inn">
+                                                ИНН
+                                            </option>
+                                        </select>
+
+                                        {documentErrors?.type && (
+                                            <span className="form-field__error">
+                                                {documentErrors.type}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <div
+                                        className={`form-field ${
+                                            documentErrors?.number
+                                                ? 'form-field--error'
+                                                : ''
+                                        }`}
+                                    >
+                                        <input
+                                            type="text"
+                                            value={document.number}
+                                            className={
+                                                documentErrors?.number
+                                                    ? 'form-field__input--error'
+                                                    : ''
+                                            }
+                                            onChange={(event) => {
+                                                onDocumentsChange(
+                                                    formData.documents.map(
+                                                        (item) =>
+                                                            item.id ===
+                                                            document.id
+                                                                ? {
+                                                                    ...item,
+                                                                    number: event
+                                                                        .target
+                                                                        .value,
+                                                                }
+                                                                : item,
+                                                    ),
+                                                );
+                                            }}
+                                            placeholder="Номер документа"
+                                        />
+
+                                        {documentErrors?.number && (
+                                            <span className="form-field__error">
+                                                {documentErrors.number}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <div
+                                        className={`form-field ${
+                                            documentErrors?.issueDate
+                                                ? 'form-field--error'
+                                                : ''
+                                        }`}
+                                    >
+                                        <input
+                                            type="date"
+                                            value={document.issueDate}
+                                            className={
+                                                documentErrors?.issueDate
+                                                    ? 'form-field__input--error'
+                                                    : ''
+                                            }
+                                            onChange={(event) => {
+                                                onDocumentsChange(
+                                                    formData.documents.map(
+                                                        (item) =>
+                                                            item.id ===
+                                                            document.id
+                                                                ? {
+                                                                    ...item,
+                                                                    issueDate:
+                                                                    event
+                                                                        .target
+                                                                        .value,
+                                                                }
+                                                                : item,
+                                                    ),
+                                                );
+                                            }}
+                                        />
+
+                                        {documentErrors?.issueDate && (
+                                            <span className="form-field__error">
+                                                {documentErrors.issueDate}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <div className="form-field">
+                                        <select
+                                            value={document.status}
+                                            onChange={(event) => {
+                                                onDocumentsChange(
+                                                    formData.documents.map(
+                                                        (item) =>
+                                                            item.id ===
+                                                            document.id
+                                                                ? {
+                                                                    ...item,
+                                                                    status: event
+                                                                        .target
+                                                                        .value as Document['status'],
+                                                                }
+                                                                : item,
+                                                    ),
+                                                );
+                                            }}
+                                        >
+                                            <option value="active">
+                                                Действующий
+                                            </option>
+
+                                            <option value="expired">
+                                                Просрочен
+                                            </option>
+
+                                            <option value="replaced">
+                                                Заменён
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        className="danger-button"
+                                        onClick={() => {
+                                            onDocumentsChange(
+                                                formData.documents.filter(
+                                                    (item) =>
+                                                        item.id !==
+                                                        document.id,
                                                 ),
                                             );
                                         }}

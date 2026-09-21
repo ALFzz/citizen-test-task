@@ -2,6 +2,7 @@ import type {
     Education,
     FamilyMember,
     Gender,
+    Document
 } from '../../entities/citizen/types';
 
 export type CitizenFormData = {
@@ -24,7 +25,8 @@ export type CitizenFormData = {
     workplace: string;
 
     family: FamilyMember[],
-    education: Education[]
+    education: Education[],
+    documents: Document[]
 };
 
 export const initialCitizenForm: CitizenFormData = {
@@ -46,7 +48,8 @@ export const initialCitizenForm: CitizenFormData = {
     maritalStatus: '',
     workplace: '',
     family: [],
-    education: []
+    education: [],
+    documents: []
 };
 
 export type FamilyMemberErrors = {
@@ -62,15 +65,22 @@ export type EducationErrors = {
     graduationYear?: string;
 };
 
+export type DocumentErrors = {
+    type?: string;
+    number?: string;
+    issueDate?: string;
+};
+
 export type CitizenFormErrors = Partial<
     Record<
         Exclude<
             keyof CitizenFormData,
-            'family' | 'education'
+            'family' | 'education' | 'documents'
         >,
         string
     >
 > & {
     family?: Record<string, FamilyMemberErrors>;
     education?: Record<string, EducationErrors>;
+    documents?: Record<string, DocumentErrors>;
 };

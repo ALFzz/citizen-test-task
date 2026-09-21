@@ -17,12 +17,24 @@ export interface Education {
     specialty: string;
 }
 
+export type DocumentStatus =
+    | 'active'
+    | 'expired'
+    | 'replaced';
+
+export type DocumentType =
+    | ''
+    | 'passport'
+    | 'birth_certificate'
+    | 'snils'
+    | 'inn';
+
 export interface Document {
     id: string;
-    type: string;
+    type: DocumentType;
     number: string;
     issueDate: string;
-    status: string;
+    status: DocumentStatus;
 }
 
 export interface Citizen {

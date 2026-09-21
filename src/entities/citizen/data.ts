@@ -44,10 +44,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-001',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '4512 123456',
                 issueDate: '2019-05-12',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -89,10 +89,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-003',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '4011 654321',
                 issueDate: '2022-08-20',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -140,10 +140,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-005',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '4610 987654',
                 issueDate: '2020-03-15',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -185,10 +185,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-006',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '4509 234567',
                 issueDate: '2021-06-18',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -236,10 +236,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-008',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '4608 345678',
                 issueDate: '2019-11-22',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -274,10 +274,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-009',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '6507 456789',
                 issueDate: '2020-09-14',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -319,10 +319,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-011',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '9211 567890',
                 issueDate: '2018-04-27',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -364,10 +364,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-013',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '5406 678901',
                 issueDate: '2020-12-10',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -420,10 +420,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-017',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '6304 789012',
                 issueDate: '2017-02-11',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -457,10 +457,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-018',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '8009 890123',
                 issueDate: '2021-01-23',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -494,10 +494,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-019',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '4516 901234',
                 issueDate: '2022-02-17',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -538,10 +538,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-021',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '4015 012345',
                 issueDate: '2019-07-08',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -582,10 +582,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-023',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '3620 123456',
                 issueDate: '2020-05-19',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -619,10 +619,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-024',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '0318 234567',
                 issueDate: '2021-11-30',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -663,10 +663,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-026',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '6012 345678',
                 issueDate: '2016-10-04',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -707,10 +707,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-028',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '5209 456789',
                 issueDate: '2022-04-16',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -744,10 +744,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-029',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '5908 567890',
                 issueDate: '2019-09-21',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -788,10 +788,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-031',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '5203 678901',
                 issueDate: '2020-02-12',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -838,10 +838,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-034',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '7106 789012',
                 issueDate: '2018-12-03',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -875,10 +875,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-035',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '2409 890123',
                 issueDate: '2021-08-14',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -925,10 +925,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-038',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '7205 901234',
                 issueDate: '2017-06-15',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -962,10 +962,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-039',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '4017 012345',
                 issueDate: '2022-01-09',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -1006,10 +1006,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-041',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '7504 123456',
                 issueDate: '2018-03-28',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -1043,10 +1043,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-042',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '3408 234567',
                 issueDate: '2022-12-01',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -1093,10 +1093,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-045',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '4607 345678',
                 issueDate: '2019-10-16',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -1130,10 +1130,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-046',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '7606 456789',
                 issueDate: '2020-06-22',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -1186,10 +1186,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-050',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '6303 567890',
                 issueDate: '2016-11-18',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -1223,10 +1223,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-051',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '3908 678901',
                 issueDate: '2021-03-27',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -1267,10 +1267,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-053',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '6907 789012',
                 issueDate: '2018-08-11',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },
@@ -1304,10 +1304,10 @@ export const citizens: Citizen[] = [
         documents: [
             {
                 id: 'D-054',
-                type: 'Паспорт',
+                type: 'passport',
                 number: '2509 890123',
                 issueDate: '2022-10-14',
-                status: 'Действует',
+                status: 'active',
             },
         ],
     },

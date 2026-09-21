@@ -49,6 +49,15 @@ export function CitizenForm({
         }));
     };
 
+    const handleDocumentsChange = (
+        documents: CitizenFormData['documents'],
+    ) => {
+        setFormData((current) => ({
+            ...current,
+            documents,
+        }));
+    };
+
     const handleChange = (
         field: keyof CitizenFormData,
         value: string,
@@ -165,6 +174,7 @@ export function CitizenForm({
                             onChange={handleChange}
                             onFamilyChange={handleFamilyChange}
                             onEducationChange={handleEducationChange}
+                            onDocumentsChange={handleDocumentsChange}
                         />
                     )}
                 </main>
