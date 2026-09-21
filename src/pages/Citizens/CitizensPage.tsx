@@ -55,7 +55,7 @@ export function CitizensPage() {
 
             status: 'verification',
 
-            family: [],
+            family: formData.family,
             education: [],
             documents: [],
         };
@@ -246,6 +246,7 @@ export function CitizensPage() {
                         maritalStatus: '',
                         education: '',
                         workplace: '',
+                        family: selectedCitizen.family
                     }}
                     onClose={() => setIsEditFormOpen(false)}
                     onSubmit={handleUpdateCitizen}

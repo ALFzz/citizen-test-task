@@ -1,4 +1,5 @@
 import type {CitizenFormData, CitizenFormErrors} from '../types';
+import type {FamilyMember} from "../../../entities/citizen/types.ts";
 
 type AdditionalStepProps = {
     formData: CitizenFormData;
@@ -7,9 +8,10 @@ type AdditionalStepProps = {
         field: keyof CitizenFormData,
         value: string,
     ) => void;
+    onFamilyChange: (family: FamilyMember[]) => void;
 };
 
-export function AdditionalStep({formData, errors, onChange,}: AdditionalStepProps) {
+export function AdditionalStep({formData, errors, onChange, onFamilyChange}: AdditionalStepProps) {
     return (
         <div className="citizen-form-step">
             <h3>Дополнительные сведения</h3>
@@ -159,6 +161,117 @@ export function AdditionalStep({formData, errors, onChange,}: AdditionalStepProp
                         </span>
                     )}
                 </label>
+            </div>
+
+            <div className="family-section">
+                <div className="family-section__header">
+                    <div>
+                        <h4>Члены семьи</h4>
+                        <p>Добавьте родственников гражданина</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        className="secondary-button"
+                        onClick={() => {
+                            const newMember: FamilyMember = {
+                                id: `FAM-${Date.now()}`,
+                                fullName: '',
+                                relationship: '',
+                                birthDate: '',
+                            };
+
+                            onFamilyChange([
+                                ...formData.family,
+                                newMember,
+                            ]);
+                        }}
+                    >
+                        + Добавить
+                    </button>
+                </div>
+
+                {formData.family.length === 0 ? (
+                    <div className="family-section__empty">
+                        Члены семьи не добавлены
+                    </div>
+                ) : (
+                    <div className="family-list">
+                        {formData.family.map((member) => (
+                            <div
+                                className="family-item"
+                                key={member.id}
+                            >
+                                <input
+                                    type="text"
+                                    value={member.fullName}
+                                    onChange={(event) => {
+                                        onFamilyChange(
+                                            formData.family.map((item) =>
+                                                item.id === member.id
+                                                    ? {
+                                                        ...item,
+                                                        fullName: event.target.value,
+                                                    }
+                                                    : item,
+                                            ),
+                                        );
+                                    }}
+                                    placeholder="ФИО"
+                                />
+
+                                <input
+                                    type="text"
+                                    value={member.relationship}
+                                    onChange={(event) => {
+                                        onFamilyChange(
+                                            formData.family.map((item) =>
+                                                item.id === member.id
+                                                    ? {
+                                                        ...item,
+                                                        relationship: event.target.value,
+                                                    }
+                                                    : item,
+                                            ),
+                                        );
+                                    }}
+                                    placeholder="Степень родства"
+                                />
+
+                                <input
+                                    type="date"
+                                    value={member.birthDate}
+                                    onChange={(event) => {
+                                        onFamilyChange(
+                                            formData.family.map((item) =>
+                                                item.id === member.id
+                                                    ? {
+                                                        ...item,
+                                                        birthDate: event.target.value,
+                                                    }
+                                                    : item,
+                                            ),
+                                        );
+                                    }}
+                                />
+
+                                <button
+                                    type="button"
+                                    className="danger-button"
+                                    onClick={() => {
+                                        onFamilyChange(
+                                            formData.family.filter(
+                                                (item) => item.id !== member.id,
+                                            ),
+                                        );
+                                    }}
+                                >
+                                    Удалить
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

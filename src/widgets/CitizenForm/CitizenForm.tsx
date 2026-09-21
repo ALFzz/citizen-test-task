@@ -31,7 +31,14 @@ export function CitizenForm({
     const [formData, setFormData] = useState<CitizenFormData>(initialData);
     const [errors, setErrors] = useState<CitizenFormErrors>({});
 
-
+    const handleFamilyChange = (
+        family: CitizenFormData['family'],
+    ) => {
+        setFormData((current) => ({
+            ...current,
+            family,
+        }));
+    };
 
     const handleChange = (
         field: keyof CitizenFormData,
@@ -147,6 +154,7 @@ export function CitizenForm({
                             formData={formData}
                             errors={errors}
                             onChange={handleChange}
+                            onFamilyChange={handleFamilyChange}
                         />
                     )}
                 </main>

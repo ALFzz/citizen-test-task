@@ -1,4 +1,5 @@
 import type {
+    FamilyMember,
     Gender,
 } from '../../entities/citizen/types';
 
@@ -21,6 +22,8 @@ export type CitizenFormData = {
     maritalStatus: string;
     education: string;
     workplace: string;
+
+    family: FamilyMember[]
 };
 
 export const initialCitizenForm: CitizenFormData = {
@@ -42,6 +45,7 @@ export const initialCitizenForm: CitizenFormData = {
     maritalStatus: '',
     education: '',
     workplace: '',
+    family: []
 };
 
 export type CitizenFormErrors = Partial<
