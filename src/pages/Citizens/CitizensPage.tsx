@@ -91,6 +91,7 @@ export function CitizensPage() {
                         address: formData.address,
                         inn: formData.inn,
                         snils: formData.snils,
+                        family: formData.family,
                     }
                     : citizen,
             ),
