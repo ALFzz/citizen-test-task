@@ -32,20 +32,27 @@
 
 .dashboard-charts {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 16px;
     margin-top: 16px;
 }
 
+.dashboard-charts > :first-child {
+    grid-column: 1 / -1;
+}
 
 @media (max-width: 1000px) {
     .dashboard-stats {
         grid-template-columns: repeat(2, 1fr);
     }
-
     .dashboard-charts {
         grid-template-columns: 1fr;
     }
+
+    .dashboard-charts > :first-child {
+        grid-column: auto;
+    }
+
 }
 
 @media (max-width: 600px) {
