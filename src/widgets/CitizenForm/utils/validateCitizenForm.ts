@@ -1,6 +1,6 @@
 import type {
     CitizenFormData,
-    CitizenFormErrors,
+    CitizenFormErrors, FamilyMemberErrors,
 } from '../types';
 
 export function validateCitizenFormStep(
@@ -74,6 +74,37 @@ export function validateCitizenFormStep(
             )
         ) {
             errors.snils = 'Введите корректный СНИЛС';
+        }
+
+        const familyErrors: Record<
+            string,
+            FamilyMemberErrors
+        > = {};
+
+        formData.family.forEach((member) => {
+            const memberErrors: FamilyMemberErrors = {};
+
+            if (!member.fullName.trim()) {
+                memberErrors.fullName = 'Введите ФИО';
+            }
+
+            if (!member.relationship.trim()) {
+                memberErrors.relationship =
+                    'Укажите степень родства';
+            }
+
+            if (!member.birthDate) {
+                memberErrors.birthDate =
+                    'Укажите дату рождения';
+            }
+
+            if (Object.keys(memberErrors).length > 0) {
+                familyErrors[member.id] = memberErrors;
+            }
+        });
+
+        if (Object.keys(familyErrors).length > 0) {
+            errors.family = familyErrors;
         }
     }
 

@@ -197,79 +197,119 @@ export function AdditionalStep({formData, errors, onChange, onFamilyChange}: Add
                     </div>
                 ) : (
                     <div className="family-list">
-                        {formData.family.map((member) => (
-                            <div
-                                className="family-item"
-                                key={member.id}
-                            >
-                                <input
-                                    type="text"
-                                    value={member.fullName}
-                                    onChange={(event) => {
-                                        onFamilyChange(
-                                            formData.family.map((item) =>
-                                                item.id === member.id
-                                                    ? {
-                                                        ...item,
-                                                        fullName: event.target.value,
-                                                    }
-                                                    : item,
-                                            ),
-                                        );
-                                    }}
-                                    placeholder="ФИО"
-                                />
+                        {formData.family.map((member) => {
+                            const memberErrors = errors.family?.[member.id];
 
-                                <input
-                                    type="text"
-                                    value={member.relationship}
-                                    onChange={(event) => {
-                                        onFamilyChange(
-                                            formData.family.map((item) =>
-                                                item.id === member.id
-                                                    ? {
-                                                        ...item,
-                                                        relationship: event.target.value,
-                                                    }
-                                                    : item,
-                                            ),
-                                        );
-                                    }}
-                                    placeholder="Степень родства"
-                                />
+                            return (
+                                <div className="family-item" key={member.id}>
+                                    <div className="form-field">
+                                        <input
+                                            type="text"
+                                            value={member.fullName}
+                                            className={
+                                                memberErrors?.fullName
+                                                    ? 'form-field__input--error'
+                                                    : ''
+                                            }
+                                            onChange={(event) => {
+                                                onFamilyChange(
+                                                    formData.family.map((item) =>
+                                                        item.id === member.id
+                                                            ? {
+                                                                ...item,
+                                                                fullName: event.target.value,
+                                                            }
+                                                            : item,
+                                                    ),
+                                                );
+                                            }}
+                                            placeholder="ФИО"
+                                        />
 
-                                <input
-                                    type="date"
-                                    value={member.birthDate}
-                                    onChange={(event) => {
-                                        onFamilyChange(
-                                            formData.family.map((item) =>
-                                                item.id === member.id
-                                                    ? {
-                                                        ...item,
-                                                        birthDate: event.target.value,
-                                                    }
-                                                    : item,
-                                            ),
-                                        );
-                                    }}
-                                />
+                                        {memberErrors?.fullName && (
+                                            <span className="form-field__error">
+                        {memberErrors.fullName}
+                    </span>
+                                        )}
+                                    </div>
 
-                                <button
-                                    type="button"
-                                    className="danger-button"
-                                    onClick={() => {
-                                        onFamilyChange(
-                                            formData.family.filter(
-                                                (item) => item.id !== member.id,
-                                            ),
-                                        );
-                                    }}
-                                >
-                                    Удалить
-                                </button>
-                            </div>
-                        ))}
+                                    <div className="form-field">
+                                        <input
+                                            type="text"
+                                            value={member.relationship}
+                                            className={
+                                                memberErrors?.relationship
+                                                    ? 'form-field__input--error'
+                                                    : ''
+                                            }
+                                            onChange={(event) => {
+                                                onFamilyChange(
+                                                    formData.family.map((item) =>
+                                                        item.id === member.id
+                                                            ? {
+                                                                ...item,
+                                                                relationship: event.target.value,
+                                                            }
+                                                            : item,
+                                                    ),
+                                                );
+                                            }}
+                                            placeholder="Степень родства"
+                                        />
+
+                                        {memberErrors?.relationship && (
+                                            <span className="form-field__error">
+                        {memberErrors.relationship}
+                    </span>
+                                        )}
+                                    </div>
+
+                                    <div className="form-field">
+                                        <input
+                                            type="date"
+                                            value={member.birthDate}
+                                            className={
+                                                memberErrors?.birthDate
+                                                    ? 'form-field__input--error'
+                                                    : ''
+                                            }
+                                            onChange={(event) => {
+                                                onFamilyChange(
+                                                    formData.family.map((item) =>
+                                                        item.id === member.id
+                                                            ? {
+                                                                ...item,
+                                                                birthDate: event.target.value,
+                                                            }
+                                                            : item,
+                                                    ),
+                                                );
+                                            }}
+                                        />
+
+                                        {memberErrors?.birthDate && (
+                                            <span className="form-field__error">
+                        {memberErrors.birthDate}
+                    </span>
+                                        )}
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        className="danger-button"
+                                        onClick={() => {
+                                            onFamilyChange(
+                                                formData.family.filter(
+                                                    (item) => item.id !== member.id,
+                                                ),
+                                            );
+                                        }}
+                                    >
+                                        Удалить
+                                    </button>
+                                </div>
+                            );
+                        })}
                     </div>
                 )}
             </div>

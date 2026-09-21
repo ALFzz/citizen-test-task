@@ -48,6 +48,14 @@ export const initialCitizenForm: CitizenFormData = {
     family: []
 };
 
+export type FamilyMemberErrors = {
+    fullName?: string;
+    relationship?: string;
+    birthDate?: string;
+};
+
 export type CitizenFormErrors = Partial<
-    Record<keyof CitizenFormData, string>
->;
+    Record<Exclude<keyof CitizenFormData, 'family'>, string>
+> & {
+    family?: Record<string, FamilyMemberErrors>;
+};
