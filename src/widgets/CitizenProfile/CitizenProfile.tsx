@@ -4,9 +4,10 @@ import type { Citizen } from '../../entities/citizen/types';
 
 import './CitizenProfile.css';
 
-interface CitizenProfileProps {
-    citizen: Citizen | null;
-}
+type CitizenProfileProps = {
+    citizen: Citizen;
+    onEdit: () => void;
+};
 
 type ProfileTab = 'general' | 'family' | 'education' | 'documents';
 
@@ -29,7 +30,7 @@ const tabs: Array<{ id: ProfileTab; label: string; }> = [
     },
 ];
 
-export function CitizenProfile({citizen,}: CitizenProfileProps) {
+export function CitizenProfile({citizen, onEdit}: CitizenProfileProps) {
     const [activeTab, setActiveTab] = useState<ProfileTab>('general');
 
     if (!citizen) {
@@ -70,6 +71,7 @@ export function CitizenProfile({citizen,}: CitizenProfileProps) {
                 <button
                     className="profile-edit-button"
                     type="button"
+                    onClick={onEdit}
                 >
                     Редактировать
                 </button>

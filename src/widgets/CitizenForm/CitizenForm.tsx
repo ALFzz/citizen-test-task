@@ -10,6 +10,8 @@ import {validateCitizenFormStep} from "./utils/validateCitizenForm.ts";
 type CitizenFormProps = {
     onClose: () => void;
     onSubmit: (formData: CitizenFormData) => void;
+    initialData?: CitizenFormData;
+    mode?: 'create' | 'edit';
 };
 
 const steps = [
@@ -18,10 +20,15 @@ const steps = [
     'Дополнительно',
 ];
 
-export function CitizenForm({onClose, onSubmit}: CitizenFormProps) {
+export function CitizenForm({
+                                onClose,
+                                onSubmit,
+                                initialData = initialCitizenForm,
+                                mode = 'create',
+                            }: CitizenFormProps)  {
 
     const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState<CitizenFormData>(initialCitizenForm);
+    const [formData, setFormData] = useState<CitizenFormData>(initialData);
     const [errors, setErrors] = useState<CitizenFormErrors>({});
 
 
@@ -167,7 +174,7 @@ export function CitizenForm({onClose, onSubmit}: CitizenFormProps) {
                             type="button"
                             onClick={handleSubmit}
                         >
-                            Создать гражданина
+                            {mode === 'edit' ? 'Сохранить изменения' : 'Создать'}
                         </button>
                     )}
                 </footer>
