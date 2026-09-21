@@ -1,4 +1,5 @@
 import type {
+    Education,
     FamilyMember,
     Gender,
 } from '../../entities/citizen/types';
@@ -20,10 +21,10 @@ export type CitizenFormData = {
     inn: string;
     snils: string;
     maritalStatus: string;
-    education: string;
     workplace: string;
 
-    family: FamilyMember[]
+    family: FamilyMember[],
+    education: Education[]
 };
 
 export const initialCitizenForm: CitizenFormData = {
@@ -43,9 +44,9 @@ export const initialCitizenForm: CitizenFormData = {
     inn: '',
     snils: '',
     maritalStatus: '',
-    education: '',
     workplace: '',
-    family: []
+    family: [],
+    education: []
 };
 
 export type FamilyMemberErrors = {

@@ -40,6 +40,15 @@ export function CitizenForm({
         }));
     };
 
+    const handleEducationChange = (
+        education: CitizenFormData['education'],
+    ) => {
+        setFormData((current) => ({
+            ...current,
+            education,
+        }));
+    };
+
     const handleChange = (
         field: keyof CitizenFormData,
         value: string,
@@ -155,6 +164,7 @@ export function CitizenForm({
                             errors={errors}
                             onChange={handleChange}
                             onFamilyChange={handleFamilyChange}
+                            onEducationChange={handleEducationChange}
                         />
                     )}
                 </main>

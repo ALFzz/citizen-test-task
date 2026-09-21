@@ -56,7 +56,7 @@ export function CitizensPage() {
             status: 'verification',
 
             family: formData.family,
-            education: [],
+            education: formData.education,
             documents: [],
         };
 
@@ -92,6 +92,7 @@ export function CitizensPage() {
                         inn: formData.inn,
                         snils: formData.snils,
                         family: formData.family,
+                        education: formData.education
                     }
                     : citizen,
             ),
@@ -245,9 +246,9 @@ export function CitizensPage() {
                         inn: selectedCitizen.inn,
                         snils: selectedCitizen.snils,
                         maritalStatus: '',
-                        education: '',
                         workplace: '',
-                        family: selectedCitizen.family
+                        family: selectedCitizen.family,
+                        education: selectedCitizen.education
                     }}
                     onClose={() => setIsEditFormOpen(false)}
                     onSubmit={handleUpdateCitizen}

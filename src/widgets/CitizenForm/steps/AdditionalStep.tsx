@@ -1,5 +1,5 @@
 import type {CitizenFormData, CitizenFormErrors} from '../types';
-import type {FamilyMember} from "../../../entities/citizen/types.ts";
+import type {Education, FamilyMember} from "../../../entities/citizen/types.ts";
 
 type AdditionalStepProps = {
     formData: CitizenFormData;
@@ -9,9 +9,10 @@ type AdditionalStepProps = {
         value: string,
     ) => void;
     onFamilyChange: (family: FamilyMember[]) => void;
+    onEducationChange: (education: Education[]) => void;
 };
 
-export function AdditionalStep({formData, errors, onChange, onFamilyChange}: AdditionalStepProps) {
+export function AdditionalStep({formData, errors, onChange, onFamilyChange, onEducationChange}: AdditionalStepProps) {
     return (
         <div className="citizen-form-step">
             <h3>Дополнительные сведения</h3>
@@ -102,42 +103,6 @@ export function AdditionalStep({formData, errors, onChange, onFamilyChange}: Add
                     )}
                 </label>
 
-                <label className="form-field">
-                    <span>Образование</span>
-
-                    <select
-                        className={errors.education ? 'form-field__input--error' : ''}
-                        value={formData.education}
-                        onChange={(event) =>
-                            onChange(
-                                'education',
-                                event.target.value,
-                            )
-                        }
-                    >
-                        <option value="" disabled>
-                            Выберите образование
-                        </option>
-
-                        <option value="secondary">
-                            Среднее
-                        </option>
-
-                        <option value="secondary-special">
-                            Среднее специальное
-                        </option>
-
-                        <option value="higher">
-                            Высшее
-                        </option>
-                    </select>
-
-                    {errors.education && (
-                        <span className="form-field__error">
-                            {errors.education}
-                        </span>
-                    )}
-                </label>
 
                 <label className="form-field form-field--full">
                     <span>Место работы</span>
@@ -310,6 +275,142 @@ export function AdditionalStep({formData, errors, onChange, onFamilyChange}: Add
                                 </div>
                             );
                         })}
+                    </div>
+                )}
+            </div>
+
+            <div className="family-section education-section">
+                <div className="family-section__header">
+                    <div>
+                        <h4>Образование</h4>
+                        <p>Добавьте сведения об образовании</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        className="secondary-button"
+                        onClick={() => {
+                            const newEducation: Education = {
+                                id: `EDU-${Date.now()}`,
+                                institution: '',
+                                degree: '',
+                                graduationYear: new Date().getFullYear(),
+                                specialty: '',
+                            };
+
+                            onEducationChange([
+                                ...formData.education,
+                                newEducation,
+                            ]);
+                        }}
+                    >
+                        + Добавить
+                    </button>
+                </div>
+
+                {formData.education.length === 0 ? (
+                    <div className="family-section__empty">
+                        Сведения об образовании не добавлены
+                    </div>
+                ) : (
+                    <div className="family-list">
+                        {formData.education.map((education) => (
+                            <div
+                                className="family-item"
+                                key={education.id}
+                            >
+                                <input
+                                    type="text"
+                                    value={education.institution}
+                                    onChange={(event) => {
+                                        onEducationChange(
+                                            formData.education.map((item) =>
+                                                item.id === education.id
+                                                    ? {
+                                                        ...item,
+                                                        institution:
+                                                        event.target.value,
+                                                    }
+                                                    : item,
+                                            ),
+                                        );
+                                    }}
+                                    placeholder="Учебное заведение"
+                                />
+
+                                <input
+                                    type="text"
+                                    value={education.degree}
+                                    onChange={(event) => {
+                                        onEducationChange(
+                                            formData.education.map((item) =>
+                                                item.id === education.id
+                                                    ? {
+                                                        ...item,
+                                                        degree:
+                                                        event.target.value,
+                                                    }
+                                                    : item,
+                                            ),
+                                        );
+                                    }}
+                                    placeholder="Степень / уровень"
+                                />
+
+                                <input
+                                    type="text"
+                                    value={education.specialty}
+                                    onChange={(event) => {
+                                        onEducationChange(
+                                            formData.education.map((item) =>
+                                                item.id === education.id
+                                                    ? {
+                                                        ...item,
+                                                        specialty:
+                                                        event.target.value,
+                                                    }
+                                                    : item,
+                                            ),
+                                        );
+                                    }}
+                                    placeholder="Специальность"
+                                />
+
+                                <input
+                                    type="number"
+                                    value={education.graduationYear}
+                                    onChange={(event) => {
+                                        onEducationChange(
+                                            formData.education.map((item) =>
+                                                item.id === education.id
+                                                    ? {
+                                                        ...item,
+                                                        graduationYear:
+                                                            Number(event.target.value),
+                                                    }
+                                                    : item,
+                                            ),
+                                        );
+                                    }}
+                                    placeholder="Год окончания"
+                                />
+
+                                <button
+                                    type="button"
+                                    className="danger-button"
+                                    onClick={() => {
+                                        onEducationChange(
+                                            formData.education.filter(
+                                                (item) =>
+                                                    item.id !== education.id,
+                                            ),
+                                        );
+                                    }}
+                                >
+                                    Удалить
+                                </button>
+                            </div>
+                        ))}
                     </div>
                 )}
             </div>
